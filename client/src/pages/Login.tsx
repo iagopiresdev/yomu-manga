@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import aichan from '../assets/aichan-mobile.svg'
 import aichanpc from '../assets/aichan.svg'
 import { Link } from 'react-router-dom'
-    
+import { useNavigate } from 'react-router-dom';
+
+
 const createUserFormSchema = z.object({
     email: z.string()
         .nonempty('O E-mail é obrigatório')
@@ -17,10 +18,10 @@ const createUserFormSchema = z.object({
 
 type CreateUserFormData = z.infer<typeof createUserFormSchema>
 
+function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<string>> } ) {
+    const navigate = useNavigate();
+    const [user, setUser] = useState('');
 
-function Login() {
-    const [output, setOutput] = useState('');
-    
     const { 
         register, 
         handleSubmit, 
@@ -30,25 +31,25 @@ function Login() {
     })
 
     const getUser = async (data: CreateUserFormData) => {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
-    
+        
         if (!response.ok) {
             console.error('Failed to create user');
         } else {
             const responseData = await response.json();
-            setOutput(JSON.stringify(responseData, null, 2));
+            const user = JSON.stringify(responseData, null, 2);
+            setUser(user);
+            setLoggedUser(user);
+            navigate('/dashboard'); // Redirect to dashboard
         }
     };
     
-
-
-
   return (
     <section className='h-screen min-w-full flex flex-col bg-[#f6f8ff] flex-wrap md:max-w-2xl max-w-md md:min-w-full md:min-h-full'>    
         <div className='md:min-w-[40%] md:min-h-full '>
@@ -84,8 +85,6 @@ function Login() {
 
                 <button type="submit" className='min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 md:min-w-[500px]'>Salvar</button>
                 <Link to="/SignIn" className='min-w-[340px] h-[50px] mt-[-20px] rounded-2xl font-bold text-[#5800FF] uppercase text-center py-3 md:min-w-[500px]'>Criar conta</Link>
-
-                <pre>{output}</pre>
             </form>
         </main>
     </section>
