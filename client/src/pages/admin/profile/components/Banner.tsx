@@ -1,5 +1,5 @@
-import avatar from "assets/img/avatars/avatar11.png";
-import banner from "assets/img/profile/banner.png";
+import avatar from "../../../../assets/img/avatars/avatar11.png";
+import banner from "../../../../assets/img/profile/banner.png";
 import Card from "../../../../components/card";
 
 const Banner = () => {

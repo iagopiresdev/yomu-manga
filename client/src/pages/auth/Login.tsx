@@ -46,7 +46,7 @@ function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
             const user = JSON.stringify(responseData, null, 2);
             setUser(user);
             setLoggedUser(user);
-            navigate('/dashboard'); // Redirect to dashboard
+            navigate('/admin/profile'); // Redirect to dashboard
         }
     };
     
