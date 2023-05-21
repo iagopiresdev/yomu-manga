@@ -26,10 +26,9 @@ function Login() {
         resolver: zodResolver(createUserFormSchema)
     })
 
-
-function createUser (data: any) {
-    setOutput(JSON.stringify(data, null, 2))
-}
+    function createUser (data: any) {
+        setOutput(JSON.stringify(data, null, 2))
+    }
 
   return (
     <section className='h-screen flex flex-col '>
