@@ -5,7 +5,7 @@ import image2 from "../../../../assets/img/profile/image2.png";
 import image3 from "../../../../assets/img/profile/image3.png";
 import Card from "../../../../components/card";
 
-const Project = () => {
+const Project = ({ userData }:any) => {
   return (
     <Card extra={"w-full p-4 h-full"}>
       <div className="mb-8 w-full">

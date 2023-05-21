@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import aichanpc from '../assets/aichan.svg'
+import aichanpc from '../../assets/aichan.svg'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
     
 const createUserFormSchema = z.object({
     name: z.string()
@@ -20,8 +22,9 @@ const createUserFormSchema = z.object({
 type CreateUserFormData = z.infer<typeof createUserFormSchema>
 
 
-function SignIn() {
-    const [output, setOutput] = useState('');
+function SignIn( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<string>> } ) {
+    const navigate = useNavigate();
+    const [user, setUser] = useState('');
     
     const { 
         register, 
@@ -32,7 +35,7 @@ function SignIn() {
     })
 
     const createUser = async (data: CreateUserFormData) => {
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +47,10 @@ function SignIn() {
             console.error('Failed to create user');
         } else {
             const responseData = await response.json();
-            setOutput(JSON.stringify(responseData, null, 2));
+            const user = JSON.stringify(responseData, null, 2);
+            setUser(user);
+            setLoggedUser(user);
+            navigate('/admin/profile'); // Redirect to dashboard
         }
     };
     
@@ -103,9 +109,7 @@ function SignIn() {
                 </div>
 
                 <button type="submit" className='min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 md:min-w-[500px]'>Salvar</button>
-                <button type="reset" className='min-w-[340px] h-[50px] mt-[-20px] rounded-2xl font-bold text-[#5800FF] uppercase text-center py-3 md:min-w-[500px]'>Limpar</button>
-
-                <pre>{output}</pre>
+                <Link to="/auth/sign-in" className='min-w-[340px] h-[50px] mt-[-20px] rounded-2xl font-bold text-[#5800FF] uppercase text-center py-3 md:min-w-[500px]'>Entrar</Link>
             </form>
         </main>
     </section>

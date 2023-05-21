@@ -1,0 +1,30 @@
+[ ] : sobre dos mangas
+        <div className="col-span-5 lg:col-span-6 lg:mb-0 3xl:col-span-5">
+          <General />
+        </div>
+
+
+[ ] : Aba de Upload de Arquivos para o usuario enviar capas personalizadas para seus mangas
+        <div className="col-span-3 lg:!mb-0">
+          <Storage />
+        </div>
+
+                <div className="z-0 col-span-5 lg:!mb-0">
+          <Upload />
+        </div>
+
+[ ] : Notification for relases
+       <div className="col-span-5 lg:col-span-12 lg:mb-0 3xl:!col-span-3">
+          <Notification />
+        </div>
+
+[ ] : Aba de Configurações
+
+
+Requests ao banco:
+- [ ] : Avatar/Img de perfil
+- [ ] : Username
+- [ ] : Tag (baseada em quantos mangas ele tem, Ex. Iniciante, Intermediario, Avançado)
+- [ ] : numero de mangas, capitulos para ler e Ranking
+- [ ] : Pegar todos os mangas do usuario e listar
+- [ ] : Pegar todos os capitulos do manga e listar em cada manga

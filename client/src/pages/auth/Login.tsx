@@ -43,9 +43,8 @@ function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
             console.error('Failed to create user');
         } else {
             const responseData = await response.json();
-            const user = JSON.stringify(responseData, null, 2);
-            setUser(user);
-            setLoggedUser(user);
+            setUser(responseData);
+            setLoggedUser(responseData);
             navigate('/admin/profile'); // Redirect to dashboard
         }
     };
@@ -83,8 +82,8 @@ function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
                     {errors.password && <span className='text-red-500 text-sm'>{errors.password.message}</span>}
                 </div>
 
-                <button type="submit" className='min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 md:min-w-[500px]'>Salvar</button>
-                <Link to="/SignIn" className='min-w-[340px] h-[50px] mt-[-20px] rounded-2xl font-bold text-[#5800FF] uppercase text-center py-3 md:min-w-[500px]'>Criar conta</Link>
+                <button type="submit" className='min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 md:min-w-[500px]'>Entrar</button>
+                <Link to="/auth/sign-up" className='min-w-[340px] h-[50px] mt-[-20px] rounded-2xl font-bold text-[#5800FF] uppercase text-center py-3 md:min-w-[500px]'>Criar conta</Link>
             </form>
         </main>
     </section>

@@ -13,6 +13,7 @@ import Profile from "./pages/admin/profile";
 
 // Auth Imports
 import SignIn from "./pages/auth/Login";
+import SignUp from "./pages/auth/Register";
 
 interface AppRoutesProps {
   setLoggedUser: Dispatch<SetStateAction<string>>;
@@ -36,27 +37,33 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
   const [open, setOpen] = useState(true);
   const [currentRoute, setCurrentRoute] = useState("Main Dashboard");
 
+  // Close the sidenav when the screen is less than 1200px
   useEffect(() => {
     window.addEventListener("resize", () =>
       window.innerWidth < 1200 ? setOpen(false) : setOpen(true)
     );
   }, []);
 
+  // Update the current route based on the location
   useEffect(() => {
-    // Update the current route based on the location
+ 
     if (location.pathname.includes("/admin/default")) {
       setCurrentRoute("Main Dashboard");
     } else if (location.pathname.includes("/admin/profile")) {
       setCurrentRoute("Profile");
     } else if (location.pathname.includes("/auth/sign-in")) {
       setCurrentRoute("Sign In");
+    } else if (location.pathname.includes("/auth/sign-up")) {
+      setCurrentRoute("Sign Up");
     }
   }, [location.pathname]);
 
   return (
     <Routes>
+      {/* Auth Routes */}
       <Route path="/" element={<Navigate to="/auth/sign-in" replace />} />
       <Route path="/auth/sign-in" element={<SignIn setLoggedUser={setLoggedUser} />} />
+      <Route path="/auth/sign-up" element={<SignUp setLoggedUser={setLoggedUser} />} />
 
       {/* Admin Routes */}
       <Route
@@ -64,11 +71,15 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
         element={loggedUser ? <AdminLayout open={open} setOpen={setOpen} currentRoute={currentRoute}>
           <Routes>
             <Route path="default" element={<Dashboard />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
             <Route path="dashboard" element={<Dashboard />} />
           </Routes>
         </AdminLayout> : <Navigate to="/auth/sign-in" replace />}
       />
+
+      {/* 404 Route */}
+      <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />
+
     </Routes>
   );
 }

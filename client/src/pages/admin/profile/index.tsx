@@ -1,42 +1,47 @@
+import { useEffect, useState } from 'react';
 import Banner from "./components/Banner";
-import General from "./components/General";
-import Notification from "./components/Notification";
 import Project from "./components/Project";
-import Storage from "./components/Storage";
-import Upload from "./components/Upload";
 
-const ProfileOverview = () => {
+
+const Profile = ({ loggedUser }:any ) => {
+  const [userData, setUserData] = useState(null);
+ 
+// Fetch the user's data when the component mounts 
+useEffect(() => {
+  async function fetchUserData() {
+    const response = await fetch(`${import.meta.env.VITE_API_HOST}/users/${loggedUser.refreshToken.userId}`, {
+      headers: {
+        'Authorization': `Bearer ${loggedUser.token}`,
+        'Accept': 'application/json'
+      }
+    });
+    
+    const data = await response.json();
+    console.log(data);
+    setUserData(data);
+  }
+  fetchUserData();
+}, [loggedUser]);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex w-full flex-col gap-5">
       <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12">
-        <div className="col-span-4 lg:!mb-0">
-          <Banner />
-        </div>
-
-        <div className="col-span-3 lg:!mb-0">
-          <Storage />
-        </div>
-
-        <div className="z-0 col-span-5 lg:!mb-0">
-          <Upload />
+        <div className="col-span-full lg:!mb-0">
+          <Banner userData={userData} />
         </div>
       </div>
-      {/* all project & ... */}
-
-      <div className="grid h-full grid-cols-1 gap-5 lg:!grid-cols-12">
-        <div className="col-span-5 lg:col-span-6 lg:mb-0 3xl:col-span-4">
-          <Project />
-        </div>
-        <div className="col-span-5 lg:col-span-6 lg:mb-0 3xl:col-span-5">
-          <General />
-        </div>
-
-        <div className="col-span-5 lg:col-span-12 lg:mb-0 3xl:!col-span-3">
-          <Notification />
+      {/* all mangas & ... */}
+      <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12">
+        <div className="col-span-full lg:!mb-0">
+        <Project userData={userData} />
         </div>
       </div>
     </div>
   );
 };
 
-export default ProfileOverview;
+export default Profile;
