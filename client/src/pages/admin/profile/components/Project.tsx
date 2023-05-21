@@ -3,7 +3,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import image1 from "assets/img/profile/image1.png";
 import image2 from "assets/img/profile/image2.png";
 import image3 from "assets/img/profile/image3.png";
-import Card from "../../../components/card";
+import Card from "../../../../components/card";
 
 const Project = () => {
   return (

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import aichanpc from '../assets/aichan.svg'
+import aichanpc from '../../assets/aichan.svg'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
