@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 import { Request, Response, NextFunction } from 'express';
 import { router } from './routes2/routes';
@@ -7,6 +8,7 @@ import { ZodError } from 'zod';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use(router);
 
 // handle errors with zod

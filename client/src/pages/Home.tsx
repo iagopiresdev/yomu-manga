@@ -5,10 +5,10 @@ import  logo  from '../assets/logo.svg'
 
 function Home() {
   return (
-    <div>
+    <div className='flex'>
         <Header />
     
-        <Link to="/login">Login</Link>
+        <Link to="/ProfileForm">Login</Link>
     </div>
   )
 }

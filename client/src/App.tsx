@@ -1,14 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Home, Login } from './pages'
+import { Home, Login, SignIn } from './pages'
 
 
 export default function App() {
   return (
     <BrowserRouter>
-    <main className="w-full sm:p-8 px-4 py-8 bg-[#f9fafe] min-h-[calc(100vh-73px)]">
+    <main className="w-screen">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
     </main>
     </BrowserRouter>
