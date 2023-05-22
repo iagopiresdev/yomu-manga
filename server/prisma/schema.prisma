@@ -20,7 +20,7 @@ model User {
 }
 
 model Manga {
-  id          Int         @id @default(autoincrement())
+  id          String         @id @default(uuid())
   title       String  
   image       String?
   description String?
@@ -31,13 +31,14 @@ model Manga {
 }
 
 model UserManga {
-  id     Int     @id @default(autoincrement())
-  user   User    @relation(fields: [userId], references: [id])
-  userId String
-  manga  Manga   @relation(fields: [mangaId], references: [id])
-  mangaId Int
-  status String
+  id      Int      @id @default(autoincrement())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+  manga   Manga    @relation(fields: [mangaId], references: [id])
+  mangaId String 
+  status  String   @default("pending")
 }
+
 
 model RefreshToken {
   id        String   @id @default(uuid())

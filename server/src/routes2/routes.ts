@@ -5,14 +5,14 @@ import { authMiddleware } from '../middlewares/ensureAuth';
 
 
 //user routes
-import  { CreateUserController }  from '../entities/createUser/CreateUserController';
-import { AuthUserController } from '../entities/authUser/AuthUserController';
-import { RefreshTokenUserController } from '../entities/refreshTokenUser/RefreshTokenUserController';
-import { GetUserAllController }  from '../entities/getUser/GetUserAllController';
-import  { GetUserByIdController }  from '../entities/getUser/GetUserByIdController';
-import  { GetUserByUsernameController }  from '../entities/getUser/GetUserByUsernameController';
-import  { UpdateUserController }  from '../entities/updateUser/UpdateUserController';
-import  { DeleteUserController }  from '../entities/deleteUser/DeleteUserController';
+import  { CreateUserController }  from '../services/createUser/CreateUserController';
+import { AuthUserController } from '../services/authUser/AuthUserController';
+import { RefreshTokenUserController } from '../services/refreshTokenUser/RefreshTokenUserController';
+import { GetUserAllController }  from '../services/getUser/GetUserAllController';
+import  { GetUserByIdController }  from '../services/getUser/GetUserByIdController';
+import  { GetUserByUsernameController }  from '../services/getUser/GetUserByUsernameController';
+import  { UpdateUserController }  from '../services/updateUser/UpdateUserController';
+import  { DeleteUserController }  from '../services/deleteUser/DeleteUserController';
 
 const createUserController = new CreateUserController();
 const authUserController = new AuthUserController();
@@ -35,46 +35,37 @@ router.delete('/users/:id', authMiddleware, deleteUserController.handle);
 
 //manga routes
 import { MangaController } from '../controllers/mangaApiController';
-
-
-
-
+import { GetMangaController } from '../services/getManga/GetMangaController';
+import { CreateMangaController } from '../services/createManga/CreateMangaController';
+//import { ListMangaController } from '../services/listManga/ListMangaController';
 
 const mangaController = new MangaController();
-
+const getMangaController = new GetMangaController();
+//const listMangaController = new ListMangaController();
+const createMangaController = new CreateMangaController();
 
 
 router.get('/external-api/manga/:id', mangaController.getManga);
-
-import { CreateMangaController } from '../entities/createManga/CreateMangaController';
-//import { ListMangasController } from '../entities/listMangas/ListMangasController';
-
-const createMangaController = new CreateMangaController();
-//const listMangasController = new ListMangasController();
-
+router.get('/mangas/:id', getMangaController.handle);
 router.post('/mangas', createMangaController.handle);
-//router.get('/mangas', listMangasController.handle);
-router.get('/mangas', authMiddleware, (req, res) => {
-    return res.json([
-        { id: '1', title : 'Eleceed', description : 'lorem', author : 'algum coreano', status: 'aring' },
-        { id: '2', title : 'Solo Leveling', description : 'lorem', author : 'algum coreano', status: 'aring' },
-        { id: '3', title : 'The Beginning After The End', description : 'lorem', author : 'algum coreano', status: 'aring' },    
-    ])
-})
+//router.get('/mangas', mangaController.getAllMangas);
+
+
+//userManga routes
+import { CreateUserMangaController } from '../services/UserManga/CreateUserMangaController';
+
+const createUserMangaController = new CreateUserMangaController();
+
+router.post('/userMangas', createUserMangaController.handle);
+
+
+
+
 
 
 /*
 
 
-//post routes
-import { CreatePostController } from '../entities/createPost/CreatePostController';
-import { ListPostsController } from '../entities/listPosts/ListPostsController';
-
-const createPostController = new CreatePostController();
-const listPostsController = new ListPostsController();
-
-router.post('/posts', createPostController.handle);
-router.get('/posts', listPostsController.handle);
 
 //userManga routes
 import { CreateUserMangaController } from '../entities/createUserManga/CreateUserMangaController';

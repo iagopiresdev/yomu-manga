@@ -7,12 +7,12 @@ class GetUserByIdController {
 
         const user = await client.user.findUnique({
             where: { id },
+            include: { mangas: true },
         });
 
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
-
         return response.json(user);
     }
 }
