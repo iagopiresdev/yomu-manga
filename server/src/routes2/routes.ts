@@ -53,10 +53,14 @@ router.post('/mangas', createMangaController.handle);
 
 //userManga routes
 import { CreateUserMangaController } from '../services/UserManga/CreateUserMangaController';
+import { GetUserMangaController } from '../services/UserManga/GetUserMangaController';
 
 const createUserMangaController = new CreateUserMangaController();
+const getUserMangaController = new GetUserMangaController();
 
 router.post('/userMangas', createUserMangaController.handle);
+router.get('/userMangas/:userId', getUserMangaController.handle);
+
 
 
 
