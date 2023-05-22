@@ -62,28 +62,4 @@ router.post('/userMangas', createUserMangaController.handle);
 router.get('/userMangas/:userId', getUserMangaController.handle);
 
 
-
-
-
-
-
-/*
-
-
-
-//userManga routes
-import { CreateUserMangaController } from '../entities/createUserManga/CreateUserMangaController';
-import { ListUserMangasController } from '../entities/listUserMangas/ListUserMangasController';
-
-const createUserMangaController = new CreateUserMangaController();
-const listUserMangasController = new ListUserMangasController();
-
-router.post('/userMangas', createUserMangaController.handle);
-router.get('/userMangas', listUserMangasController.handle);
-
-
-
-
-*/
 export { router };
-

@@ -2,11 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 import { Request, Response, NextFunction } from 'express';
-import { router } from './routes2/routes';
+import { router } from './routes/routes';
 import { ZodError } from 'zod';
 import cookieParser from 'cookie-parser';
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
@@ -35,6 +36,6 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
   });
 });
 
-app.listen(3000, () => {
-  console.log('Server is running at http://localhost:3000');
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

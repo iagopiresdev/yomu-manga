@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - 4000:4000
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      RAPID_API_KEY: ${RAPID_API_KEY}
+      RAPID_API_HOST: ${RAPID_API_HOST}
+volumes:
+  db-data:
