@@ -14,7 +14,6 @@ model User {
   password      String
   name          String? 
   mangas        UserManga[]
-  posts         Post[]
   refresh_token RefreshToken?
 
   @@map("users")
@@ -22,13 +21,13 @@ model User {
 
 model Manga {
   id          Int         @id @default(autoincrement())
-  title       String
-  description String?
-  author      String?
-  status      String?
+  title       String  
   image       String?
+  description String?
+  status      String?
+  chapters    String?
   userMangas  UserManga[]
-  posts       Post[]
+
 }
 
 model UserManga {
@@ -38,17 +37,6 @@ model UserManga {
   manga  Manga   @relation(fields: [mangaId], references: [id])
   mangaId Int
   status String
-}
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  manga     Manga    @relation(fields: [mangaId], references: [id])
-  mangaId   Int
-  content   String
 }
 
 model RefreshToken {

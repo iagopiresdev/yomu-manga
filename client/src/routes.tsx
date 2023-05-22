@@ -23,8 +23,14 @@ interface AppRoutesProps {
   loggedUser: string;
 }
 
+interface AdminLayoutProps {
+  children: React.ReactNode;
+  currentRoute: string;
+  loggedUser: string;  // Add this line
+}
+
 // Create a wrapper component for admin routes
-const AdminLayout = ({ children, open, setOpen, currentRoute }:any) => (
+const AdminLayout = ({ children, currentRoute }:AdminLayoutProps) => (
   <>
     <Navbar 
       brandText={currentRoute}
@@ -36,15 +42,9 @@ const AdminLayout = ({ children, open, setOpen, currentRoute }:any) => (
 
 export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps) {
   const location = useLocation();
-  const [open, setOpen] = useState(true);
+
   const [currentRoute, setCurrentRoute] = useState("Main Dashboard");
 
-  // Close the sidenav when the screen is less than 1200px
-  useEffect(() => {
-    window.addEventListener("resize", () =>
-      window.innerWidth < 1200 ? setOpen(false) : setOpen(true)
-    );
-  }, []);
 
   // Update the current route based on the location
   useEffect(() => {
@@ -66,24 +66,23 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
       <Route path="/" element={<Navigate to="/auth/sign-in" replace />} />
       <Route path="/auth/sign-in" element={<SignIn setLoggedUser={setLoggedUser} />} />
       <Route path="/auth/sign-up" element={<SignUp setLoggedUser={setLoggedUser} />} />
-
+      <Route path="/manga-details/:mangaName" element={loggedUser ? <MangaDetails /> : <Navigate to="/auth/sign-in" replace />} />
       {/* Admin Routes */}
       <Route
         path="/admin/*"
-        element={loggedUser ? <AdminLayout open={open} setOpen={setOpen} currentRoute={currentRoute}>
+        element={loggedUser ? <AdminLayout currentRoute={currentRoute} loggedUser={loggedUser}>
           <Routes>
             <Route path="default" element={<Dashboard />} />
             <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="/manga-details/:mangaName" element={<MangaDetails />} />
           </Routes>
         </AdminLayout> : <Navigate to="/auth/sign-in" replace />}
       />
 
       {/* 404 Route */}
       <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />
-
     </Routes>
+
   );
 }
 

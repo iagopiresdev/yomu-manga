@@ -1,14 +1,24 @@
 import { Request, Response } from 'express';
-import MangaService from '../provider/MangaService';
+import {MangaService} from '../provider/MangaService';
 
 class MangaController {
     public async getManga(request: Request, response: Response): Promise<Response> {
-        const { id } = request.params;
-        const manga = await MangaService.getManga(id);
-        return response.json(manga);
+        const  manga  = request.params.id;
+        const mangaService = new MangaService();
+        const mangaData = await mangaService.execute(manga);        
+        return response.json(mangaData);
+
     }
 
-    // Add other methods here like searchManga, getTopMangas, getPopularMangas etc.
+    public async serchManga(request: Request, response: Response): Promise<Response> {
+        const  manga  = request.params.id;
+        const mangaService = new MangaService();
+        const mangaData = await mangaService.execute(manga);
+        return response.json(mangaData);
+    }
+
+
+    // Add getTopMangas, getPopularMangas etc.
 }
 
 export { MangaController };
