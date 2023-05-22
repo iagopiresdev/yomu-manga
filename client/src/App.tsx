@@ -8,7 +8,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <main className="w-screen">
+      <main className="w-screen bg-[#f6f8ff]">
         <Routes setLoggedUser={setLoggedUser} loggedUser={loggedUser} /> {/* Pass loggedUser here */}
       </main>
     </BrowserRouter>    

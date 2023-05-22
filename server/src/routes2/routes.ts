@@ -14,7 +14,6 @@ import  { GetUserByUsernameController }  from '../entities/getUser/GetUserByUser
 import  { UpdateUserController }  from '../entities/updateUser/UpdateUserController';
 import  { DeleteUserController }  from '../entities/deleteUser/DeleteUserController';
 
-
 const createUserController = new CreateUserController();
 const authUserController = new AuthUserController();
 const refreshTokenUserController = new RefreshTokenUserController();
@@ -23,7 +22,6 @@ const getUserByIdController = new GetUserByIdController();
 const getUserByUsernameController = new GetUserByUsernameController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
-
 
 router.post('/users', createUserController.handle);
 router.post('/login', authUserController.handle);
@@ -36,6 +34,18 @@ router.delete('/users/:id', authMiddleware, deleteUserController.handle);
 
 
 //manga routes
+import { MangaController } from '../controllers/mangaApiController';
+
+
+
+
+
+const mangaController = new MangaController();
+
+
+
+router.get('/external-api/manga/:id', mangaController.getManga);
+
 import { CreateMangaController } from '../entities/createManga/CreateMangaController';
 //import { ListMangasController } from '../entities/listMangas/ListMangasController';
 

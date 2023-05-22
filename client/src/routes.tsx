@@ -15,6 +15,9 @@ import Profile from "./pages/admin/profile";
 import SignIn from "./pages/auth/Login";
 import SignUp from "./pages/auth/Register";
 
+// Authenticated User Imports
+import MangaDetails from "./pages/auth/MangaDetails";
+
 interface AppRoutesProps {
   setLoggedUser: Dispatch<SetStateAction<string>>;
   loggedUser: string;
@@ -24,7 +27,6 @@ interface AppRoutesProps {
 const AdminLayout = ({ children, open, setOpen, currentRoute }:any) => (
   <>
     <Navbar 
-      onOpenSidenav={() => setOpen(true)}
       brandText={currentRoute}
     />
     {children}
@@ -73,6 +75,7 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
             <Route path="default" element={<Dashboard />} />
             <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="/manga-details/:mangaName" element={<MangaDetails />} />
           </Routes>
         </AdminLayout> : <Navigate to="/auth/sign-in" replace />}
       />
