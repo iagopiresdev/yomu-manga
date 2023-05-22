@@ -1,25 +1,21 @@
-/*
-
 import { Router } from 'express';
-import * as UserMangaController from '../controllers/userMangaController';
-
 const router = Router();
 
-// Get all manga associated with a user
-router.get('/user/:userId', UserMangaController.getAllByUser);
+import { authMiddleware } from '../middlewares/ensureAuth';
 
-// Get a specific manga associated with a user
-router.get('/user/:userId/manga/:mangaId', UserMangaController.getOneByUserAndManga);
+import { CreateUserMangaController } from '../services/UserManga/CreateUserMangaController';
+import { GetUserMangaController } from '../services/UserManga/GetUserMangaController';
+//import { UpdateUserMangaController } from '../services/UserManga/UpdateUserMangaController';
+//import { DeleteUserMangaController } from '../services/UserManga/DeleteUserMangaController';
 
-// Create a new manga-user association
-router.post('/user/:userId/manga/:mangaId', UserMangaController.create);
+const createUserMangaController = new CreateUserMangaController();
+const getUserMangaController = new GetUserMangaController();
+//const updateUserMangaController = new UpdateUserMangaController();
+//const deleteUserMangaController = new DeleteUserMangaController();
 
-// Update a manga-user association by user and manga IDs
-router.put('/user/:userId/manga/:mangaId', UserMangaController.update);
-
-// Delete a manga-user association by user and manga IDs
-router.delete('/user/:userId/manga/:mangaId', UserMangaController.delete);
+router.post('/', createUserMangaController.handle);
+router.get('/:userId', getUserMangaController.handle);
+//router.put('/userMangas/:id', updateUserMangaController.handle);
+//router.delete('/userMangas/:id', deleteUserMangaController.handle);
 
 export default router;
-
-*/

@@ -1,17 +1,33 @@
 import { Router } from 'express';
-import * as UserController from '../controllers/userController';
-import authMiddleware from '../middlewares/authMiddleware'; // Your authentication middleware
-
 const router = Router();
 
-// Registration and Login routes
-router.post('/register', UserController.register);
-router.post('/login', UserController.login);
+import { authMiddleware } from '../middlewares/ensureAuth';
 
-// Routes for authenticated users only
-router.get('/profile', authMiddleware, UserController.getProfile); // Get logged-in user's profile
-router.get('/', authMiddleware, UserController.getAll); // Get all users
-router.put('/:id', authMiddleware, UserController.update); // Update a user
-router.delete('/:id', authMiddleware, UserController.remove); // Delete a user
+import { CreateUserController } from '../services/createUser/CreateUserController';
+import { AuthUserController } from '../services/authUser/AuthUserController';
+import { RefreshTokenUserController } from '../services/refreshTokenUser/RefreshTokenUserController';
+import { GetUserAllController } from '../services/getUser/GetUserAllController';
+import { GetUserByIdController } from '../services/getUser/GetUserByIdController';
+import { GetUserByUsernameController } from '../services/getUser/GetUserByUsernameController';
+import { UpdateUserController } from '../services/updateUser/UpdateUserController';
+import { DeleteUserController } from '../services/deleteUser/DeleteUserController';
+
+const createUserController = new CreateUserController();
+const authUserController = new AuthUserController();
+const refreshTokenUserController = new RefreshTokenUserController();
+const getUserAllController = new GetUserAllController();
+const getUserByIdController = new GetUserByIdController();
+const getUserByUsernameController = new GetUserByUsernameController();
+const updateUserController = new UpdateUserController();
+const deleteUserController = new DeleteUserController();
+
+router.post('/', createUserController.handle);
+router.post('/login', authUserController.handle);
+router.post('/refresh-token', refreshTokenUserController.handle);
+router.get('/users', authMiddleware, getUserAllController.handle);
+router.get('/users/:id', authMiddleware, getUserByIdController.handle);
+router.get('/users/:username', authMiddleware, getUserByUsernameController.handle);
+router.put('/users/:id', authMiddleware, updateUserController.handle);
+router.delete('/users/:id', authMiddleware, deleteUserController.handle);
 
 export default router;

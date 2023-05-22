@@ -2,7 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 import { Request, Response, NextFunction } from 'express';
-import { router } from './routes/routes';
+import router from './routes/routes';
+import  userRoutes  from './routes/userRoutes';
+import  mangaRoutes  from './routes/mangaRoutes';
+import  userMangasRoutes  from './routes/userMangaRoutes';
 import { ZodError } from 'zod';
 import cookieParser from 'cookie-parser';
 
@@ -16,7 +19,13 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-app.use(router);
+app.use('/', router);
+app.use('/users', userRoutes);
+app.use('/mangas', mangaRoutes);
+app.use('/userMangas', userMangasRoutes);
+
+
+//app.use(router);
 
 // handle errors with zod
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
