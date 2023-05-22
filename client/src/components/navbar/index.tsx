@@ -228,12 +228,12 @@ const Navbar = (props: {
       <div className="mt-3 h-px w-full bg-light-secondary dark:bg-dark-secondary " />
 
       <div className="mt-3 ml-4 flex flex-col">
-        <a
-          href=" "
+        <Link
+          to="/admin/config"
           className="text-sm text-light-text dark:text-dark-text hover:text-light-text-accent dark:hover:text-dark-text-accent"
         >
           Configurações
-        </a>
+        </Link>
 
         <a
           href=" "

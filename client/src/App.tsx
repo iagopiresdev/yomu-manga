@@ -1,7 +1,7 @@
 // App component
 import { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import Routes from './routes' // Import the routes file
+import Routes from './routes'
 
 export default function App() {
   const [loggedUser, setLoggedUser] = useState('');

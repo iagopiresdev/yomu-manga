@@ -6,6 +6,13 @@ import aichanpc from '../../assets/aichan.svg'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
+interface User {
+    token: string;
+    refreshToken: {
+      userId: string;
+    };
+  }
+
 
 const createUserFormSchema = z.object({
     email: z.string()
@@ -18,7 +25,7 @@ const createUserFormSchema = z.object({
 
 type CreateUserFormData = z.infer<typeof createUserFormSchema>
 
-function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<string>> } ) {
+function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<User | null>> } ) {
     const navigate = useNavigate();
     const [user, setUser] = useState('');
 
@@ -40,12 +47,12 @@ function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
         });
         
         if (!response.ok) {
-            console.error('Failed to create user');
+            console.error('Failed to create get user');
         } else {
             const responseData = await response.json();
             setUser(responseData);
             setLoggedUser(responseData);
-            navigate('/admin/profile'); // Redirect to dashboard
+            navigate('/admin/profile');
         }
     };
     

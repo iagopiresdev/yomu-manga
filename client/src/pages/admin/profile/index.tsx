@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
 import Banner from "./components/Banner";
-import Project from "./components/Project";
+import MyMangas from "./components/MyMangas";
 import Upload from './components/Upload';
 
+const Profile = ({ loggedUser }:any) => {
+  const [userData, setUserData] = useState(null); 
+  useEffect(() => {
+    async function fetchUserData() {
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/users/${loggedUser.refreshToken.userId}`, {
+        headers: {
+          'Authorization': `Bearer ${loggedUser.token}`,
+          'Accept': 'application/json'
+        }
+      });
+      
+      const data = await response.json();
+      setUserData(data);
+    }
 
-const Profile = ({ loggedUser }:any ) => {
-  const [userData, setUserData] = useState(null);
- 
-// Fetch the user's data when the component mounts 
-useEffect(() => {
-  async function fetchUserData() {
-    const response = await fetch(`${import.meta.env.VITE_API_HOST}/users/${loggedUser.refreshToken.userId}`, {
-      headers: {
-        'Authorization': `Bearer ${loggedUser.token}`,
-        'Accept': 'application/json'
-      }
-    });
-    
-    const data = await response.json();
-    setUserData(data);
-  }
-  fetchUserData();
-}, [loggedUser]);
+    if (loggedUser) {
+      fetchUserData();
+    }
+  }, [loggedUser]); 
 
+
+  console.log(userData);
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -44,7 +46,7 @@ useEffect(() => {
       {/* all mangas & ... */}
       <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12 shadow-sm shadow-[#5800FF] rounded-xl">
         <div className="col-span-full lg:!mb-0">
-        <Project userData={userData} />
+        <MyMangas userData={userData} />
         </div>
       </div>
     </div>

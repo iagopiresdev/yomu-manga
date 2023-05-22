@@ -1,5 +1,5 @@
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from ".";
 
 interface Manga {
@@ -24,8 +24,8 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
   const [mangaCompleto, setMangaCompleto] = useState<Manga | null>(null);
 
   const getMangaCompleto = async () => {
-    // Return early if it's currently loading
-    if (isLoading) return;
+    // Return early if the manga is already in state
+    if (mangaCompleto && mangaCompleto.myanimelist_id === position) return;
 
     setIsLoading(true);
     try {
@@ -37,45 +37,68 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
         }
       });
       const data = await response.json();
-      console.log(data);
       setMangaCompleto(data);
-
-      // Add a delay before setting isLoading back to false to prevent spamming of the button
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       setIsLoading(false);
     }
   };
 
+  const setMangaUser = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/mangas`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        //send userId and mangaId as a JSON
+        body: JSON.stringify({
+          userId: 'userId', // replace with actual userId
+          mangaId: mangaCompleto?.myanimelist_id // replace with actual mangaId
+        })
+      });
+    }catch (error) {
+      console.error(error);
+    }
+  };
+
+
   const handleHeartClick = async () => {
-    // Call getMangaCompleto only if mangaCompleto is null
-    if (!mangaCompleto) {
+    if(!mangaCompleto || mangaCompleto.myanimelist_id !== position){
       await getMangaCompleto();
     }
-
     setHeart(!heart);
-
+    
+    
+    //create manga when user clicks heart
     try {
-      if (!heart) {
+      if (heart) {
         // heart was off, now it's on -> POST request
-        const response = await fetch(`${import.meta.env.VITE_API_HOST}/your-api-endpoint`, {
+
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/mangas`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            userId: 'userId', // replace with actual userId
-            mangaId: mangaCompleto?.myanimelist_id // replace with actual mangaId
-          })
+          //send manga as a JSON
+          body: JSON.stringify({ mangaCompleto })
         });
-  
+        
+        //if manga already exists, 
         if (!response.ok) {
+          console.log();
           throw new Error('POST request failed');
         }
-      } else {
+      } 
+      
+      
+      
+      
+      
+      
+      
+      else {
         // heart was on, now it's off -> DELETE request
         const response = await fetch(`${import.meta.env.VITE_API_HOST}/your-api-endpoint`, {
           method: 'DELETE',
@@ -96,7 +119,6 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
       console.error(error);
     }
   };
-
   return (
     <Card
       extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white`}
@@ -158,9 +180,8 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
               Current Bid: {price} <span>ETH</span>
             </p>
           </div>
-          <button className="linear rounded-[20px] bg-brand-900 px-4 py-2 text-base font-medium text-white transition duration-200 hover:bg-brand-800 active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:opacity-90">
-            Place Bid
-          </button>
+          <Card>
+    </Card>
         </div>
       </div>
     </Card>

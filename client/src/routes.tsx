@@ -17,24 +17,39 @@ import SignUp from "./pages/auth/Register";
 
 // Authenticated User Imports
 import MangaDetails from "./pages/auth/MangaDetails";
+import Configurations from "./pages/admin/profile/Configurations";
+
+
+interface User {
+  token: string;
+  refreshToken: {
+    userId: string;
+  };
+}
 
 interface AppRoutesProps {
-  setLoggedUser: Dispatch<SetStateAction<string>>;
-  loggedUser: string;
+  setLoggedUser: Dispatch<SetStateAction<User | null>>;
+  loggedUser: User | null;
 }
 
 interface AdminLayoutProps {
   children: React.ReactNode;
   currentRoute: string;
-  loggedUser: string;  // Add this line
+  loggedUser: User | null;
 }
 
-// Create a wrapper component for admin routes
-const AdminLayout = ({ children, currentRoute }:AdminLayoutProps) => (
+const AdminLayout = ({ children, currentRoute }: AdminLayoutProps) => (
   <>
     <Navbar 
       brandText={currentRoute}
     />
+    {children}
+    <Footer />
+  </>
+);
+
+const ConfigurationsLayout = ({ children }: { children: React.ReactNode }) => (
+  <>
     {children}
     <Footer />
   </>
@@ -45,10 +60,7 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
 
   const [currentRoute, setCurrentRoute] = useState("Main Dashboard");
 
-
-  // Update the current route based on the location
   useEffect(() => {
- 
     if (location.pathname.includes("/admin/default")) {
       setCurrentRoute("Main Dashboard");
     } else if (location.pathname.includes("/admin/profile")) {
@@ -62,27 +74,38 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
 
   return (
     <Routes>
-      {/* Auth Routes */}
       <Route path="/" element={<Navigate to="/auth/sign-in" replace />} />
       <Route path="/auth/sign-in" element={<SignIn setLoggedUser={setLoggedUser} />} />
       <Route path="/auth/sign-up" element={<SignUp setLoggedUser={setLoggedUser} />} />
       <Route path="/manga-details/:mangaName" element={loggedUser ? <MangaDetails /> : <Navigate to="/auth/sign-in" replace />} />
-      {/* Admin Routes */}
+      
       <Route
         path="/admin/*"
-        element={loggedUser ? <AdminLayout currentRoute={currentRoute} loggedUser={loggedUser}>
-          <Routes>
-            <Route path="default" element={<Dashboard />} />
-            <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
-            <Route path="dashboard" element={<Dashboard />} />
-          </Routes>
-        </AdminLayout> : <Navigate to="/auth/sign-in" replace />}
+        element={loggedUser ? 
+          <AdminLayout currentRoute={currentRoute} loggedUser={loggedUser}>
+            <Routes>
+              <Route path="default" element={<Dashboard />} />
+              <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
+              <Route path="dashboard" element={<Dashboard />} />
+            </Routes>
+          </AdminLayout> 
+          : 
+          <Navigate to="/auth/sign-in" replace />
+        }
       />
-
-      {/* 404 Route */}
+      <Route
+        path="/admin/config/*"
+        element={loggedUser ? 
+          <ConfigurationsLayout>
+            <Routes>
+              <Route path="" element={<Configurations loggedUser={loggedUser} setLoggedUser={setLoggedUser} />} />
+            </Routes>
+          </ConfigurationsLayout> 
+          : 
+          <Navigate to="/auth/sign-in" replace />
+        }
+      />
       <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />
     </Routes>
-
   );
 }
-
