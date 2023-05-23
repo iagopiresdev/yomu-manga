@@ -46,7 +46,7 @@ const Navbar = (props: {
             className="text-sm font-normal text-light-text-accent hover:underline dark:text-dark-text"
             href=" "
           >
-            Pages
+            Login
             <span className="mx-1 text-sm text-light-text-accent hover:text-light-text dark:text-dark-text">
               {" "}
               /{" "}
@@ -61,7 +61,7 @@ const Navbar = (props: {
         </div>
         <p className="shrink text-[33px] capitalize text-light-text-accent dark:text-dark-text">
           <Link
-            to="#"
+            to="/admin/profile"
             className="font-bold capitalize hover:underline"
           >
             Meu Perfil
@@ -69,12 +69,8 @@ const Navbar = (props: {
         </p>
       </div>
 
-
-
+      {/* Search */}
       <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-light-secondary px-2 py-2 shadow-sm shadow-shadow-500 dark:bg-dark-primary md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2 shadow-[#5800FF]">
-        
-        
-        {/* Search */}
         <div className="flex h-full items-center rounded-full bg-light-primary text-light-text dark:bg-dark-primary dark:text-dark-text xl:w-[225px]">
       <p className="pl-3 pr-2 text-xl">
         <FiSearch className="h-4 w-4 text-light-text-accent dark:text-dark-text" />
@@ -89,7 +85,6 @@ const Navbar = (props: {
       />
     </div>
 
-
         {/* start Notification */}
 <Dropdown
   button={
@@ -102,10 +97,10 @@ const Navbar = (props: {
     <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-light-primary p-4 shadow-xl shadow-shadow-500 dark:bg-dark-primary dark:text-dark-text sm:w-[460px]">
       <div className="flex items-center justify-between">
         <p className="text-base font-bold text-light-text dark:text-dark-text-accent">
-          Notification
+          Notificações
         </p>
         <p className="text-sm font-bold text-light-text dark:text-dark-text-accent">
-          Mark all read
+          Marcar como Lido
         </p>
       </div>
 
@@ -162,21 +157,21 @@ const Navbar = (props: {
               />
               <a
                 target="blank"
-                href="https://horizon-ui.com/pro?ref=live-free-tailwind-react"
+                href="#"
                 className="px-full linear flex cursor-pointer items-center justify-center rounded-xl bg-brand-500 py-[11px] font-bold text-dark-text-accent transition duration-200 hover:bg-brand-600 hover:underline active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               >
                 Créditos
               </a>
               <a
                 target="blank"
-                href="https://horizon-ui.com/docs-tailwind/docs/react/installation?ref=live-free-tailwind-react"
+                href="#"
                 className="px-full linear flex cursor-pointer items-center justify-center rounded-xl border py-[11px] text-dark-text-accent font-bold text-navy-700 transition duration-200 hover:bg-gray-200 hover:text-navy-700 dark:!border-white/10 dark:text-white dark:hover:bg-white/20 dark:hover:text-white dark:active:bg-white/10"
               >
                 Placeholder
               </a>
               <a
                 target="blank"
-                href="https://horizon-ui.com/?ref=live-free-tailwind-react"
+                href="#"
                 className="hover:bg-black px-full linear flex cursor-pointer items-center justify-center rounded-xl text-dark-text-accent py-[11px] font-bold text-navy-700 transition duration-200 hover:text-navy-700 dark:text-white dark:hover:text-white"
               >
                 Placeholder
@@ -211,7 +206,7 @@ const Navbar = (props: {
 <Dropdown
   button={
     <img
-      className="h-10 w-10 rounded-full"
+      className="h-10 w-10 rounded-full cursor-pointer"
       src={jinwoo}
       alt="Jin woo from Solo Leveling and the best character ever"
     />

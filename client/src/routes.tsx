@@ -8,8 +8,8 @@ import Navbar from "./components/navbar"
 import Footer from "./components/footer/Footer";
 
 // Admin Imports
-import Dashboard from "./pages/admin/default";
-import Profile from "./pages/admin/profile";
+
+import Profile from "./pages/profile/Profile";
 
 // Auth Imports
 import SignIn from "./pages/auth/Login";
@@ -17,7 +17,7 @@ import SignUp from "./pages/auth/Register";
 
 // Authenticated User Imports
 import MangaDetails from "./pages/auth/MangaDetails";
-import Configurations from "./pages/admin/profile/Configurations";
+import Configurations from "./pages/profile/Dashboard";
 
 
 interface User {
@@ -84,9 +84,9 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
         element={loggedUser ? 
           <AdminLayout currentRoute={currentRoute} loggedUser={loggedUser}>
             <Routes>
-              <Route path="default" element={<Dashboard />} />
+
               <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
-              <Route path="dashboard" element={<Dashboard />} />
+
             </Routes>
           </AdminLayout> 
           : 

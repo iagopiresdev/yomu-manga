@@ -18,7 +18,7 @@ const MangaDetails = () => {
 
   const fetchManga = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_HOST}/external-api/manga/${mangaName}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/mangas/${mangaName}`);
       const data = await response.json();
       setManga(data);
     } catch (error) {

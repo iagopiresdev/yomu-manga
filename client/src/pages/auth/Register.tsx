@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import aichanpc from '../../assets/aichan.svg'
@@ -29,6 +29,7 @@ const signUpFormSchema = z.object({
 type SignUpFormData = z.infer<typeof signUpFormSchema>
 
 function SignUp({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<User | null>> }) {
+    const [statusMessage, setStatusMessage] = useState('');
     const navigate = useNavigate();
     const [user, setUser] = useState({});
 
@@ -48,9 +49,9 @@ function SignUp({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
             },
             body: JSON.stringify(data)
         });
-        console.log(response);
         
         if (!response.ok) {
+            setStatusMessage('Erro ao criar usuário');
             console.error('Failed to create user');
         } else {
             const responseData = await response.json();

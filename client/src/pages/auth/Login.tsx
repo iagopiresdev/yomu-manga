@@ -26,6 +26,7 @@ const createUserFormSchema = z.object({
 type CreateUserFormData = z.infer<typeof createUserFormSchema>
 
 function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<User | null>> } ) {
+    const [statusMessage, setStatusMessage] = useState('');
     const navigate = useNavigate();
     const [user, setUser] = useState('');
 
@@ -47,6 +48,7 @@ function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
         });
         
         if (!response.ok) {
+            setStatusMessage('Erro ao criar usuário');
             console.error('Failed to create get user');
         } else {
             const responseData = await response.json();
@@ -64,6 +66,7 @@ function Login( { setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStat
         <main className='md:min-w-[60%] md:min-h-full flex items-center'>
         <form className='w-full max-w-md mt-[10px] mx-auto flex flex-col gap-7 items-center justify-center md:max-w-xl' onSubmit={handleSubmit(getUser)}>
                 <div className='text-[36px] font-bold flex items-center justify-center flex-col mt-[50px] md:mt-0'>
+                {statusMessage && <p className="status-message text-red-500 text-center mt-12">{statusMessage}</p>}
                     <h1>ACESSE A </h1>
                     <h1 className='text-[#5800FF]'>YOMU MANGA</h1>
                 </div>
