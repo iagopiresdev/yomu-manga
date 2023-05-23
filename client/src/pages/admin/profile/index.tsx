@@ -5,6 +5,8 @@ import Upload from './components/Upload';
 
 const Profile = ({ loggedUser }:any) => {
   const [userData, setUserData] = useState(null); 
+
+  console.log(loggedUser);
   useEffect(() => {
     async function fetchUserData() {
       const response = await fetch(`${import.meta.env.VITE_API_HOST}/users/${loggedUser.refreshToken.userId}`, {

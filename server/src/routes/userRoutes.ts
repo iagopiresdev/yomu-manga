@@ -24,10 +24,10 @@ const deleteUserController = new DeleteUserController();
 router.post('/', createUserController.handle);
 router.post('/login', authUserController.handle);
 router.post('/refresh-token', refreshTokenUserController.handle);
-router.get('/users', authMiddleware, getUserAllController.handle);
-router.get('/users/:id', authMiddleware, getUserByIdController.handle);
-router.get('/users/:username', authMiddleware, getUserByUsernameController.handle);
-router.put('/users/:id', authMiddleware, updateUserController.handle);
-router.delete('/users/:id', authMiddleware, deleteUserController.handle);
+router.get('/', authMiddleware, getUserAllController.handle);
+router.get('/:id', authMiddleware, getUserByIdController.handle);
+router.get('/:username', authMiddleware, getUserByUsernameController.handle);
+router.put('/:id', authMiddleware, updateUserController.handle);
+router.delete('/:id', authMiddleware, deleteUserController.handle);
 
 export default router;
