@@ -2,6 +2,10 @@
 
 Projeto fullstack desenvolvido como desafio técnico.
 
+Yomu mangá serve para você ler sinopses e salvar mangas que queira ler!
+
+É claro, tudo isso salvando na sua conta!
+
 ## Prerequisites
 
 - Docker
