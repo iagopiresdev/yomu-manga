@@ -1,0 +1,12 @@
+[ ] - Pegar todos os mangas com base na pesquisa.
+    [ ] - Fazer a requisição para a API do myanimelist
+    [ ] - Pegar os dados da requisição
+        [ ] - Comparar se o manga já existe no banco de dados
+        [ ] - Se não existir, salvar no banco de dados
+        [ ] - Se existir, atualizar o manga no banco de dados
+[ ] - Retornar todos os mangas salvos no banco de dados com base na pesquisa.
+
+[ ] - Se o usuario clicar para salvar
+    [ ] - Adicionar o manga na lista de mangas do usuario
+[ ] - Se usuario clicar novamente
+    [ ] - Remover o manga da lista de mangas do usuario

@@ -6,7 +6,8 @@ import Card from "../components/card";
 const MyMangas = ({ userData }:any) => {
   const [mangas, setMangas] = useState([{}]);
 
-  useEffect(() => {
+  // This code fetches all of the user's manga from the backend and stores them in the mangas state variable.
+ useEffect(() => {
     async function fetchUserMangas() {
       const response = await fetch(`${import.meta.env.VITE_API_HOST}/userMangas/${userData.id}`, {
         headers: {

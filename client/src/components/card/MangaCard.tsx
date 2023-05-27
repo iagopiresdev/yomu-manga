@@ -22,6 +22,10 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
   const [heart, setHeart] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [mangaCompleto, setMangaCompleto] = useState<Manga | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isUserLoading, setIsUserLoading] = useState(false);
+
+
 
   const getMangaCompleto = async () => {
     // Return early if the manga is already in state
@@ -41,11 +45,13 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
       setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setError('Falha ao pegar detalhes do manga. Por favor, tente novamente mais tarde.');
       setIsLoading(false);
     }
   };
 
   const setMangaUser = async () => {
+    setIsUserLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_HOST}/mangas`, {
         method: 'POST',
@@ -59,7 +65,10 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
         })
       });
     }catch (error) {
+      setError('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
       console.error(error);
+    } finally { 
+      setIsUserLoading(false);
     }
   };
 
@@ -88,16 +97,13 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
         //if manga already exists, 
         if (!response.ok) {
           console.log();
+          setError('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
           throw new Error('POST request failed');
         }
+
+        //atribute manga to user
+        setMangaUser();
       } 
-      
-      
-      
-      
-      
-      
-      
       else {
         // heart was on, now it's off -> DELETE request
         const response = await fetch(`${import.meta.env.VITE_API_HOST}/your-api-endpoint`, {
@@ -116,13 +122,19 @@ const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, posi
         }
       }
     } catch (error) {
+      setError('Falha ao salvar ou deletar o manga. Por favor, tente novamente mais tarde.');
       console.error(error);
     }
   };
   return (
+
+
+
     <Card
       extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white`}
     >
+
+  {error && <p className="bg-red-500 rounded-xl text-white p-4">{error}</p>}
       <div className="h-full w-full">
         <div className="relative w-full rounded-xl">
           <img
