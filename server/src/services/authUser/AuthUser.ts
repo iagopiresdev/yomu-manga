@@ -1,8 +1,8 @@
 
 import { client } from "../../prisma/client";
 import { compare } from "bcryptjs";
-import { GenerateRefreshToken } from "../../provider/GenerateRefreshToken";
-import { GenerateTokenProvider } from "../../provider/GenerateTokenProvider";
+import { GenerateRefreshToken } from "../../providers/GenerateRefreshToken";
+import { GenerateTokenProvider } from "../../providers/GenerateTokenProvider";
 
 
 interface IAuthUserRequest {

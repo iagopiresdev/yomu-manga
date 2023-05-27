@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {MangaService} from '../provider/MangaService';
+import {MangaService} from '../providers/MangaService';
 
 class MangaController {
     public async getManga(request: Request, response: Response): Promise<Response> {

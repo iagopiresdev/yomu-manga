@@ -1,6 +1,6 @@
 import { client } from "../../prisma/client";
-import { GenerateTokenProvider } from "../../provider/GenerateTokenProvider";
-import { GenerateRefreshToken } from "../../provider/GenerateRefreshToken";
+import { GenerateTokenProvider } from "../../providers/GenerateTokenProvider";
+import { GenerateRefreshToken } from "../../providers/GenerateRefreshToken";
 
 class RefreshTokenUser {
     async execute(refresh_token: string) {
