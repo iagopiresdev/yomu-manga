@@ -20,14 +20,16 @@ model User {
 }
 
 model Manga {
-  id          String         @id @default(uuid())
+  id          String         @id 
   title       String  
+  title_en    String?  
   image       String?
   description String?
   status      String?
   chapters    String?
+  volumes     String?
+  published   String?
   userMangas  UserManga[]
-
 }
 
 model UserManga {

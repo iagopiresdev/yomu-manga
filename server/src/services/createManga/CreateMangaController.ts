@@ -5,6 +5,7 @@ import { CreateMangaService } from './CreateMangaService';
 class CreateMangaController {
   async handle(req: Request, res: Response) {
     const data = req.body as CreateMangaDTO;
+    const { id } = req.params;
 
     try {
       // validate data with Zod
@@ -12,7 +13,7 @@ class CreateMangaController {
 
       const createMangaService = new CreateMangaService();
 
-      const manga = await createMangaService.execute(validatedData);
+      const manga = await createMangaService.execute(validatedData, id);
 
       return res.status(201).json(manga);
     }catch (error) {

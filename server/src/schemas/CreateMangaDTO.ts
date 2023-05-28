@@ -5,6 +5,7 @@ export const MangaSchema = z.object({
   alternative_titles: z.object({
     japanese: z.string(),
     english: z.string(),
+    synonyms: z.string(),  // Added synonyms here
   }),
   information: z.object({
     authors: z.array(z.object({ url: z.string(), name: z.string() })),
@@ -15,8 +16,8 @@ export const MangaSchema = z.object({
     demographic: z.array(z.object({ url: z.string(), name: z.string() })),
     genres: z.array(z.object({ url: z.string(), name: z.string() })),
     chapters: z.string(),
-    theme: z.array(z.object({ url: z.string(), name: z.string() })),
-    type: z.array(z.object({ url: z.string(), name: z.string() })),
+    themes: z.array(z.object({ url: z.string(), name: z.string() })), // Changed from theme to themes
+    type: z.array(z.object({ url: z.string(), name: z.string() })),  // Changed from type to types
   }),
   statistics: z.object({
     popularity: z.number(),
@@ -25,7 +26,7 @@ export const MangaSchema = z.object({
     members: z.number(),
     ranked: z.number(),
   }),
-  title_en: z.string().optional(),
+  title_en: z.string(),
   characters: z.array(
     z.object({
       picture_url: z.string(),
