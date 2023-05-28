@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 import { CreateUserMangaService } from './CreateUserMangaService';
-import { CreateUserMangaDTO } from './CreateUserMangaDTO';
+import { CreateUserMangaDTO } from '../../schemas/CreateUserMangaDTO';
 
 class CreateUserMangaController {
   async handle(req: Request, res: Response) {
     try {
-      const data = CreateUserMangaDTO.parse(req.body);
+      const { userId } = req.params;
+      const data = req.body as CreateUserMangaDTO;
 
       const createUserMangaService = new CreateUserMangaService();
       
-      const userManga = await createUserMangaService.execute(data);
+      const userManga = await createUserMangaService.execute(userId, data);
 
       return res.status(201).json(userManga);
     } catch (error) {

@@ -1,21 +1,22 @@
 import { Router } from 'express';
 const router = Router();
 
+//auth later
 import { authMiddleware } from '../middlewares/ensureAuth';
 
-import { CreateUserMangaController } from '../services/UserManga/CreateUserMangaController';
-import { GetUserMangaController } from '../services/UserManga/GetUserMangaController';
-//import { UpdateUserMangaController } from '../services/UserManga/UpdateUserMangaController';
-//import { DeleteUserMangaController } from '../services/UserManga/DeleteUserMangaController';
+import { CreateUserMangaController } from '../services/createUserManga/CreateUserMangaController';
+import { GetUserMangaController } from '../services/getUserManga/GetUserMangaController';
+import { UpdateUserMangaController } from '../services/updateUserManga/UpdateUserMangaController';
+import { DeleteUserMangaController } from '../services/deleteUserManga/DeleteUserMangaController';
 
 const createUserMangaController = new CreateUserMangaController();
 const getUserMangaController = new GetUserMangaController();
-//const updateUserMangaController = new UpdateUserMangaController();
-//const deleteUserMangaController = new DeleteUserMangaController();
+const updateUserMangaController = new UpdateUserMangaController();
+const deleteUserMangaController = new DeleteUserMangaController();
 
-router.post('/', createUserMangaController.handle);
+router.post('/:userId', createUserMangaController.handle);
 router.get('/:userId', getUserMangaController.handle);
-//router.put('/userMangas/:id', updateUserMangaController.handle);
-//router.delete('/userMangas/:id', deleteUserMangaController.handle);
+router.put('/:userId', updateUserMangaController.handle);
+router.delete('/:userId', deleteUserMangaController.handle);
 
 export default router;

@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 
 class GetUserMangaService {
   async execute(userId : string) {
-    // Fetch all UserManga records for a given user
     const userMangas = await prisma.userManga.findMany({
       where: {
         userId,

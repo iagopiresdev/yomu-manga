@@ -1,15 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-import { CreateUserMangaDTO } from './CreateUserMangaDTO';
-import * as z from 'zod';
-
-// Create a type from Zod schema
-type UserMangaData = z.infer<typeof CreateUserMangaDTO>;
+import { CreateUserMangaDTO } from '../../schemas/CreateUserMangaDTO';
 
 const prisma = new PrismaClient();
 
 class CreateUserMangaService {
-  async execute(data: UserMangaData) {
-    const { userId, mangaId } = data;
+  async execute(userId : string, data: CreateUserMangaDTO) {
+    const { mangaId } = data;
 
     const userMangaAlreadyExists = await prisma.userManga.findFirst({
       where: {
@@ -27,6 +23,7 @@ class CreateUserMangaService {
         userId,
         mangaId,
         status: 'Reading',
+        chaptersRead: 0,
       },
     });
 
