@@ -1,24 +1,47 @@
-import axios from 'axios';
-import * as dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
+import { CreateMangaDTO } from "../schemas/CreateMangaDTO";
 
-dotenv.config();
+const prisma = new PrismaClient();
 
 class MangaService {
-    async execute (manga: string){
-        try{
-            const response = await axios.request({
-                method: 'GET',
-                url: `https://myanimelist.p.rapidapi.com/manga/search/${manga}/6`,
-                headers: {
-                    'X-RapidAPI-Key': process.env.RAPID_API_KEY,
-                    'X-RapidAPI-Host': process.env.RAPID_API_HOST
-                }
-            })
-            return response.data;
-        }catch(err){
-            console.log(err)
-        }
-    }
+  async findMangaById(id: string) {
+    const manga = await prisma.manga.findUnique({
+      where: { id },
+    });
+    return manga;
+  }
+
+  async createManga(mangaData: CreateMangaDTO) {
+    const {
+      picture_url,
+      alternative_titles,
+      information: {
+        volumes,
+        status,
+        published,
+        chapters
+      },
+      title_en,
+      synopsis,
+      title_ov,
+    } = mangaData;
+
+    const manga = await prisma.manga.create({
+      data: {
+        id: title_ov, // assuming this is unique id, if not you should create a unique id for each manga
+        title: title_ov,
+        title_en,
+        image: picture_url,
+        description: synopsis,
+        status,
+        chapters,
+        volumes,
+        published
+      },
+    });
+
+    return manga;
+  }
 }
 
-export { MangaService }
+export default new MangaService();
