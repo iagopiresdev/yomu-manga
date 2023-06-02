@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 // Import the necessary components
 import Navbar from "./components/Navbar"
-import Footer from "./components/footer/Footer";
+import Footer from "./components/Footer";
 
 // Admin Imports
 
