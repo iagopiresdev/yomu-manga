@@ -20,13 +20,13 @@ class UpdateMangaService {
                 id: myanimelist_id,
             },
             data: {
-                title: data.title_ov,
-                title_en: data.title_en,
-                image: data.picture_url,
-                description: data.synopsis,
-                status: data.information.status,
-                chapters: data.information.chapters,
-                volumes: data.information.volumes,
+                title: data.title_ov ?? "No title",
+                title_en: data.title_en ?? "",  
+                image: data.picture_url ?? "No image",
+                description: data.synopsis ?? "No description",
+                status: data.information?.status ?? "No status",
+                chapters: data.information?.chapters ?? "0",
+                volumes: data.information?.volumes ?? "0", 
             },
         });
         

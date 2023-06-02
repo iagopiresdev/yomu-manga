@@ -1,14 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { z } from 'zod';
-import { MangaSchema, CreateMangaDTO } from '../schemas/CreateMangaDTO';
-import { MangaByIdSchema, MangaByIdDTO } from '../schemas/SearchMangaDetailsDTO';
-import { MangaSearchResultSchema, MangaSearchResultDTO } from '../schemas/SearchMangaDTO';
-import { TopMangaSchema, TopMangaDTO } from '../schemas/TopMangaDTO';
+import { MangaSchema } from '../schemas/CreateMangaDTO';
+import { TopMangaSchema } from '../schemas/TopMangaDTO';
 import { CreateMangaService } from '../services/createManga/CreateMangaService';
 
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-
 
 import * as dotenv from 'dotenv';
 
@@ -22,26 +19,36 @@ class MangaAPIProvider {
       'X-RapidAPI-Host': process.env.RAPID_API_HOST
     }
   });
-  
+
   public async searchMangaByName(name: string, limit?: number) {
     const options: AxiosRequestConfig = {
       method: 'GET',
-      url: `/manga/search/${name}${limit ? '/' + limit : ''}`
+      url: `/manga/search/${name}/6`,
+      //url: `/manga/search/${name}${limit ? '/' + limit : ''}`
     };
+  
     try {
+      const results = [];
       const response = await this.client.request(options);
-      const parsedData = response.data.map((item: MangaSearchResultDTO) => MangaSearchResultSchema.parse(item));
-      return parsedData;
+      const responseData = Array.isArray(response.data) ? response.data : [];
+
+      // for loop the parsed data, checking if each manga is in the database and adding it if it isn't
+      for (let i = 0; i < responseData.length; i++) {
+        const manga = responseData[i];
+        const id = manga.myanimelist_id;
+        results.push(await this.getMangaById(id.toString()));
+      }
+      return results;
+
     } catch (error) {
       if (error instanceof z.ZodError) {
-        // handle validation error
         console.error(error.errors);
       } else {
         throw error;
       }
     }
   }
-
+  
   public async getMangaById(id: string) {
     // Check if manga is in the database
     const existingManga = await prisma.manga.findUnique({ where: { id } });
@@ -86,7 +93,6 @@ class MangaAPIProvider {
       return parsedData;
     } catch (error) {
       if (error instanceof z.ZodError) {
-        // handle validation error
         console.error('Validation error', error);
         throw new Error('Invalid data');
       } else {
@@ -112,7 +118,6 @@ class MangaAPIProvider {
       const updatedRecs: any[] = []; 
   
       for (const recId of recommendations) {
-        // Use getMangaById which already handles checking database and saving if not present
         const manga = await this.getMangaById(recId);
         updatedRecs.push(manga);
       }
@@ -127,7 +132,6 @@ class MangaAPIProvider {
       }
     }
   }
-  
 }
 
 export { MangaAPIProvider };

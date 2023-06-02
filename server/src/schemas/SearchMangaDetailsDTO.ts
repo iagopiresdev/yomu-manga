@@ -4,13 +4,13 @@ export const InformationSchema = z.object({
   authors: z.array(z.object({ url: z.string(), name: z.string() })),
   volumes: z.string(),
   status: z.string(),
-  published: z.string(),
-  serialization: z.array(z.object({ url: z.string(), name: z.string() })),
-  demographic: z.array(z.object({ url: z.string(), name: z.string() })),
-  genres: z.array(z.object({ url: z.string(), name: z.string() })),
+  published: z.string().optional(),
+  serialization: z.array(z.object({ url: z.string(), name: z.string() })).optional(),
+  demographic: z.array(z.object({ url: z.string(), name: z.string() })).optional(),
+  genres: z.array(z.object({ url: z.string(), name: z.string() })).optional(),
   chapters: z.string(),
-  themes: z.array(z.object({ url: z.string(), name: z.string() })),
-  type: z.array(z.object({ url: z.string(), name: z.string() })),
+  themes: z.array(z.object({ url: z.string(), name: z.string() })).optional(),
+  type: z.array(z.object({ url: z.string(), name: z.string() })).optional(),
 });
 
 export const StatisticsSchema = z.object({

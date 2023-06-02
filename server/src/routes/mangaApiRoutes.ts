@@ -5,20 +5,7 @@ import { authMiddleware } from '../middlewares/ensureAuth';
 const router = Router();
 const mangaAPI = new MangaAPIProvider();
 
-// Add endpoints to the router
-
-// Endpoint to search for manga by name
-router.get('/search/:name', authMiddleware, async (req, res) => {
-  try {
-    const result = await mangaAPI.searchMangaByName(req.params.name);
-    res.json(result);
-  } catch (err) {
-    res.status(500).send((err as Error).toString());
-  }
-});
-
-// Endpoint to get manga details by id
-router.get('/:id', authMiddleware, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const result = await mangaAPI.getMangaById(req.params.id);
     res.json(result);
@@ -27,6 +14,14 @@ router.get('/:id', authMiddleware, async (req, res) => {
   }
 });
 
+router.get('/search/:name', async (req, res) => {
+  try {
+    const result = await mangaAPI.searchMangaByName(req.params.name);
+    res.json(result);
+  } catch (err) {
+    res.status(500).send((err as Error).toString());
+  }
+});
 
 router.get('/top/:type', authMiddleware, async (req, res) => {
     try {
@@ -40,10 +35,7 @@ router.get('/top/:type', authMiddleware, async (req, res) => {
       res.status(500).send((err as Error).toString());
     }
   });
-  
-  
 
-// Endpoint to get manga recommendations by manga id
 router.get('/:id/recommendations', authMiddleware, async (req, res) => {
   try {
     const result = await mangaAPI.getMangaRecommendations(req.params.id);

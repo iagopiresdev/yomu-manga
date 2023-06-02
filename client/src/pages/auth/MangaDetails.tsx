@@ -1,4 +1,3 @@
-// MangaDetails.tsx
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MangaCard from '../../components/card/MangaCard'
@@ -6,7 +5,7 @@ import Navbar from '../../components/navbar'
 
 interface Manga {
   title: string;
-  picture_url: string;
+  image: string;
   description: string;
   myanimelist_url: string;
   myanimelist_id: number;
@@ -18,7 +17,16 @@ const MangaDetails = () => {
 
   const fetchManga = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/mangas/${mangaName}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/mangas/search/${mangaName}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+
+          },
+        }
+
+      );
       const data = await response.json();
       setManga(data);
     } catch (error) {
@@ -41,7 +49,7 @@ const MangaDetails = () => {
             <MangaCard 
               title={mangaItem.title}
               author={mangaItem.description}
-              image={mangaItem.picture_url}
+              image={mangaItem.image}
               price={mangaItem.myanimelist_id}
               position={index}
             />

@@ -1,3 +1,5 @@
+/*
+
 import { Request, Response } from 'express';
 import {MangaService} from '../providers/MangaService';
 
@@ -22,3 +24,5 @@ class MangaController {
 }
 
 export { MangaController };
+
+*/

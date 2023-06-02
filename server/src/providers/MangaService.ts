@@ -1,3 +1,5 @@
+/*
+
 import { PrismaClient } from "@prisma/client";
 import { CreateMangaDTO } from "../schemas/CreateMangaDTO";
 
@@ -45,3 +47,5 @@ class MangaService {
 }
 
 export default new MangaService();
+
+*/
