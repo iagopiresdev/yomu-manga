@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
     <div className="flex w-full flex-col items-center justify-between px-1 pb-8 pt-3 lg:px-8 xl:flex-row">
-      <h5 className="mb-4 text-center text-sm font-medium text-gray-600 sm:!mb-0 md:text-lg">
-        <p className="mb-4 text-center text-sm text-gray-600 sm:!mb-0 md:text-base">
-          ©{1900 + new Date().getFullYear()} Yomu Manga. Todos os direitos reservados.
+      <h5 className="mb-4 text-center text-sm font-medium text-light-text-accent hover:underline dark:text-dark-tex sm:!mb-0 md:text-lg">
+        <p className="mb-4 text-center text-sm text-light-text-accent hover:underline dark:text-dark-tex sm:!mb-0 md:text-base">
+          ©{new Date().getFullYear()} Yomu Manga. All rights reserved.
         </p>
       </h5>
       <div>
@@ -11,8 +11,8 @@ const Footer = () => {
           <li>
             <a
               target="blank"
-              href="mailto:hello@simmmple.com"
-              className="text-base font-medium text-gray-600 hover:text-gray-600"
+              href="https://portifolio-iagopiresdev.vercel.app/"
+              className="text-base font-medium text-light-text-accent hover:underline dark:text-dark-tex"
             >
               Support
             </a>
@@ -20,8 +20,8 @@ const Footer = () => {
           <li>
             <a
               target="blank"
-              href="https://simmmple.com/licenses"
-              className="text-base font-medium text-gray-600 hover:text-gray-600"
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+              className="text-base font-medium text-light-text-accent hover:underline dark:text-dark-tex"
             >
               License
             </a>
@@ -29,8 +29,8 @@ const Footer = () => {
           <li>
             <a
               target="blank"
-              href="https://simmmple.com/terms-of-service"
-              className="text-base font-medium text-gray-600 hover:text-gray-600"
+              href="https://www.youtube.com/watch?v=lx0eir2xF5E&ab_channel=CriaScript"
+              className="text-base font-medium text-light-text-accent hover:underline dark:text-dark-tex"
             >
               Terms of Use
             </a>
@@ -38,10 +38,10 @@ const Footer = () => {
           <li>
             <a
               target="blank"
-              href="https://blog.horizon-ui.com/"
-              className="text-base font-medium text-gray-600 hover:text-gray-600"
+              href="https://medium.com/@iagopires.dev"
+              className="text-base font-medium text-light-text-accent hover:underline dark:text-dark-tex"
             >
-              Blog
+              Medium
             </a>
           </li>
         </ul>

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Import the necessary components
-import Navbar from "./components/navbar/Navbar"
+import Navbar from "./components/Navbar"
 import Footer from "./components/footer/Footer";
 
 // Admin Imports

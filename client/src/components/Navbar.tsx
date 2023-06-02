@@ -1,11 +1,11 @@
 import React from "react";
-import Dropdown from "../dropdown";
+import Dropdown from "./dropdown";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { z } from 'zod';
 import { Link } from "react-router-dom";
-import aichan from "../../assets/aichan.svg";
-import jinwoo from "../../assets/jinwoo.svg";
+import aichan from "../assets/aichan.svg";
+import jinwoo from "../assets/jinwoo.svg";
 import { SiMyanimelist } from "react-icons/si";
 import { FiSearch } from "react-icons/fi";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";

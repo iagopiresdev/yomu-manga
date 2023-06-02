@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MangaCard from "../../components/card/MangaCard";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../components/Navbar";
 
 interface Manga {
   title: string;
