@@ -15,7 +15,7 @@ class CreateUserMangaService {
     });
 
     if (userMangaAlreadyExists) {
-      throw new Error('UserManga already exists');
+      throw new Error('You already have this manga in your list');
     }
 
     const userManga = await prisma.userManga.create({

@@ -1,5 +1,5 @@
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from ".";
 
 interface Manga {
@@ -16,87 +16,125 @@ interface MangaCardProps {
   author: string;
   position: number;
   price: string | number;
-  userId: string;
-  mangaId: number;
 }
 
-const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId ,title, author, price, image, position }) => {
+const MangaCard: React.FC<MangaCardProps> = ({ title, author, price, image, position }) => {
   const [heart, setHeart] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [mangaCompleto, setMangaCompleto] = useState<Manga | null>(null);
-  const [alert, setAlert] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(false);
 
 
-  const handleHeartClick = () => {
+
+  const getMangaCompleto = async () => {
+    // Return early if the manga is already in state
+    if (mangaCompleto && mangaCompleto.myanimelist_id === position) return;
+
     setIsLoading(true);
-    
-    if(heart) {
-      setHeart(false);
-      setMangaUser();
+    try {
+      const response = await fetch(`https://myanimelist.p.rapidapi.com/manga/${position}`, {
+        method: "GET",
+        headers: {
+          'X-RapidAPI-Key': '0838ccfca8msh687352810d27af4p143c39jsnb917a452cc41',
+          'X-RapidAPI-Host': 'myanimelist.p.rapidapi.com'
+        }
+      });
+      const data = await response.json();
+      setMangaCompleto(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setError('Falha ao pegar detalhes do manga. Por favor, tente novamente mais tarde.');
+      setIsLoading(false);
     }
-    else {
-      setHeart(true);
-      removeMangaUser();
-    }
-    setIsLoading(false);
   };
 
   const setMangaUser = async () => {
     setIsUserLoading(true);
-    console.log(mangaId);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_HOST}/userMangas/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/mangas`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        //send userId and mangaId as a JSON
         body: JSON.stringify({
-          mangaId: mangaId
+          userId: 'userId', // replace with actual userId
+          mangaId: mangaCompleto?.myanimelist_id // replace with actual mangaId
         })
       });
-      if (response.ok) {
-        setAlert('Manga adicionado com sucesso!');
-        console.log('Manga adicionado com sucesso!');
-      }
     }catch (error) {
-      setAlert('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
+      setError('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
       console.error(error);
     } finally { 
       setIsUserLoading(false);
     }
   };
 
-  const removeMangaUser = async () => {
-    setIsUserLoading(true);
+
+  const handleHeartClick = async () => {
+    if(!mangaCompleto || mangaCompleto.myanimelist_id !== position){
+      await getMangaCompleto();
+    }
+    setHeart(!heart);
+    
+    
+    //create manga when user clicks heart
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_HOST}/userMangas/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          mangaId: mangaId 
-        })
-      });
-      if (response.ok) {
-        setAlert('Manga removido com sucesso!');
-        console.log('Manga removido com sucesso!');
+      if (heart) {
+        // heart was off, now it's on -> POST request
+
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/mangas`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          //send manga as a JSON
+          body: JSON.stringify({ mangaCompleto })
+        });
+        
+        //if manga already exists, 
+        if (!response.ok) {
+          console.log();
+          setError('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
+          throw new Error('POST request failed');
+        }
+
+        //atribute manga to user
+        setMangaUser();
+      } 
+      else {
+        // heart was on, now it's off -> DELETE request
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/your-api-endpoint`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId: 'userId', // replace with actual userId
+            mangaId: mangaCompleto?.myanimelist_id // replace with actual mangaId
+          })
+        });
+  
+        if (!response.ok) {
+          throw new Error('DELETE request failed');
+        }
       }
-    }catch (error) {
-      setAlert('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
+    } catch (error) {
+      setError('Falha ao salvar ou deletar o manga. Por favor, tente novamente mais tarde.');
       console.error(error);
-    } finally {
-      setIsUserLoading(false);
     }
   };
-
   return (
+
+
+
     <Card
       extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white`}
     >
 
-  {alert && <p className="bg-red-500 rounded-xl text-white p-4">{alert}</p>}
+  {error && <p className="bg-red-500 rounded-xl text-white p-4">{error}</p>}
       <div className="h-full w-full">
         <div className="relative w-full rounded-xl">
           <img

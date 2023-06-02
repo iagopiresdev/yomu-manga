@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Import the necessary components
-import Navbar from "./components/navbar"
+import Navbar from "./components/navbar/Navbar"
 import Footer from "./components/footer/Footer";
 
 // Admin Imports
@@ -38,10 +38,11 @@ interface AdminLayoutProps {
   loggedUser: User | null;
 }
 
-const AdminLayout = ({ children, currentRoute }: AdminLayoutProps) => (
+const AdminLayout = ({ children, currentRoute, loggedUser }: AdminLayoutProps) => (
   <>
     <Navbar 
       brandText={currentRoute}
+      loggedUser={loggedUser}
     />
     {children}
     <Footer />
@@ -77,7 +78,8 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
       <Route path="/" element={<Navigate to="/auth/sign-in" replace />} />
       <Route path="/auth/sign-in" element={<SignIn setLoggedUser={setLoggedUser} />} />
       <Route path="/auth/sign-up" element={<SignUp setLoggedUser={setLoggedUser} />} />
-      <Route path="/manga-details/:mangaName" element={loggedUser ? <MangaDetails /> : <Navigate to="/auth/sign-in" replace />} />
+      <Route path="/manga-details/:mangaName" element={loggedUser ? <MangaDetails user={loggedUser} /> : <Navigate to="/auth/sign-in" replace />} />
+
       
       <Route
         path="/admin/*"

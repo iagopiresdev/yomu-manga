@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from "./../dropdown";
+import Dropdown from "../dropdown";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { z } from 'zod';
@@ -15,11 +15,7 @@ import {
 } from "react-icons/io";
 
 
-const Navbar = (props: {
-  brandText: string;
-  secondary?: boolean | string;
-}) => {
-  const { brandText } = props;
+const Navbar = ({ brandText }: any) => {
   const [darkmode, setDarkmode] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
@@ -36,7 +32,6 @@ const Navbar = (props: {
       }
     }
   }
-
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-light-primary dark:bg-dark-primary px-6 backdrop-blur-xl">
