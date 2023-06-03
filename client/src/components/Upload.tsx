@@ -1,10 +1,9 @@
 
-
 import { MdFileUpload } from "react-icons/md";
-import Card from "../components/card/Card";
+import Card from "../components/card";
 import CardMenu from "../components/card/CardMenu";
 
-const Upload = ({ userData }:any) => {
+const Upload = () => {
   return (
     <Card className="grid h-full w-full grid-cols-1 gap-3 rounded-[20px] bg-white bg-clip-border p-3 font-dm shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none 2xl:grid-cols-11">
 

@@ -9,10 +9,12 @@ datasource db {
 
 model User {
   id            String        @id @default(uuid())
+  name          String? 
   username      String        @unique @default("default_username")
   email         String        @unique
   password      String
-  name          String? 
+  avatar        String?
+  banner        String?
   mangas        UserManga[]
   refresh_token RefreshToken?
 
