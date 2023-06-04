@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { MangaAPIProvider } from '../providers/MangaAPIProvider'; // Use the correct path
+import { MangaAPIProvider } from '../providers/MangaAPIProvider'; 
 import { authMiddleware } from '../middlewares/ensureAuth';
 
 const router = Router();
