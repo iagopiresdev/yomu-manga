@@ -7,9 +7,10 @@ const openAiProvider = new OpenAiProvider();
 
 router.post('/', async (req, res) => {
     try {
-        const manga = req.body.mangas.join(", ");
+        //chooses a random manga from the list
+        const Randommanga = req.body.mangas[Math.floor(Math.random() * req.body.mangas.length)];
 
-        const response = await openAiProvider.getMangaListRecomendation(manga);
+        const response = await openAiProvider.getMangaListRecomendation(Randommanga);
         res.json(response);
 
     } catch (err) {

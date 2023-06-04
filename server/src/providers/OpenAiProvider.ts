@@ -20,8 +20,12 @@ export class OpenAiProvider {
         });
     }
 
-    public async getMangaListRecomendation(mangaList: string) {
+    public async getMangaListRecomendationn(mangaList: string) {
+        console.log(mangaList);
         const userMessage = `say that is based on his list of mangas : (create a recomendation phrase): ${mangaList}(choose one of the mangas)  because .`;
+        const userMessage2 = ` (create a phrase like If you enjoyed reading): ${mangaList} (create a recomendation phrase): (choose a manga based on his preferences) because .`;
+        const userMessage3 = ` (create a phrase like If you enjoyed reading): ${mangaList} (choose of of the mangalist), (create a recomendation phrase based on the manga chosen): "name of the manga chosen" because .`;
+        const userMessage4 = `(If you enjoyed reading ${mangaList}), (Recommend a manga similar to ${mangaList} and say why shortly)`;
 
         try{
             const response = await fetch('https://api.openai.com/v1/completions', {
@@ -32,9 +36,9 @@ export class OpenAiProvider {
                 },
                 body: JSON.stringify({
                     model: "text-davinci-003",
-                    prompt: userMessage,
-                    max_tokens: 40,
-                    temperature: 0.9,
+                    prompt: userMessage4,
+                    max_tokens: 35,
+                    temperature: 1,
                 }
                 )
             });
@@ -42,6 +46,34 @@ export class OpenAiProvider {
             return data;
         } catch (err) {
             console.log(err);
+        }
+    }
+
+    public async getMangaListRecomendation(manga: string) {
+        const systemMessage = 'You are a knowledgeable AI assistant with an extensive database of manga and the ability to recommend what manga a user should read next between quotation marks.';
+        const userMessage = `The user has been reading this manga: ${manga}`;
+        const assistantMessage = 'Talk like a japanese anime girl, in first person and just give the answer. Recommend a similar manga between quotation marks and explain why in under 15 words.';
+
+        const data = {
+            model: 'gpt-3.5-turbo',
+            messages: [
+                {role: 'system', content: systemMessage},
+                {role: 'user', content: userMessage},
+                {role: 'assistant', content: assistantMessage},
+            ],
+            max_tokens: 60,
+        };
+        
+        try {
+            
+            const response = await this.axiosInstance.post('', data);
+            console.log(response.data);
+            //return response.data.choices[0].message.content;
+            return response.data;
+            
+
+        } catch (error) {
+            console.error(error);   
         }
     }
 
