@@ -2,49 +2,30 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState } from "react";
 import Card from ".";
 
-interface Manga {
-  title: string;
-  picture_url: string;
-  description: string;
-  myanimelist_url: string;
-  myanimelist_id: number;
-}
-
 interface MangaCardProps {
   image: string;
   title: string;
   author: string;
-  position: number;
   price: string | number;
   userId: string;
   mangaId: number;
 }
 
-const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId ,title, author, price, image, position }) => {
+const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId, title, author, price, image }) => {
   const [heart, setHeart] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [mangaCompleto, setMangaCompleto] = useState<Manga | null>(null);
   const [alert, setAlert] = useState<string | null>(null);
-  const [isUserLoading, setIsUserLoading] = useState(false);
-
 
   const handleHeartClick = () => {
-    setIsLoading(true);
-    
-    if(heart) {
+    if (heart) {
       setHeart(false);
       setMangaUser();
-    }
-    else {
+    } else {
       setHeart(true);
       removeMangaUser();
     }
-    setIsLoading(false);
   };
 
   const setMangaUser = async () => {
-    setIsUserLoading(true);
-    console.log(mangaId);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_HOST}/userMangas/${userId}`, {
         method: 'POST',
@@ -59,16 +40,13 @@ const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId ,title, author, p
         setAlert('Manga adicionado com sucesso!');
         console.log('Manga adicionado com sucesso!');
       }
-    }catch (error) {
+    } catch (error) {
       setAlert('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
       console.error(error);
-    } finally { 
-      setIsUserLoading(false);
     }
   };
 
   const removeMangaUser = async () => {
-    setIsUserLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_HOST}/userMangas/${userId}`, {
         method: 'DELETE',
@@ -76,27 +54,22 @@ const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId ,title, author, p
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          mangaId: mangaId 
+          mangaId: mangaId
         })
       });
       if (response.ok) {
         setAlert('Manga removido com sucesso!');
         console.log('Manga removido com sucesso!');
       }
-    }catch (error) {
+    } catch (error) {
       setAlert('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
       console.error(error);
-    } finally {
-      setIsUserLoading(false);
     }
   };
 
   return (
-    <Card
-      extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white`}
-    >
-
-  {alert && <p className="bg-red-500 rounded-xl text-white p-4">{alert}</p>}
+    <Card extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white`}>
+      {alert && <p className="bg-red-500 rounded-xl text-white p-4">{alert}</p>}
       <div className="h-full w-full">
         <div className="relative w-full rounded-xl">
           <img
@@ -153,8 +126,7 @@ const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId ,title, author, p
               Ranking: {price}
             </p>
           </div>
-          <Card>
-    </Card>
+          <Card></Card>
         </div>
       </div>
     </Card>

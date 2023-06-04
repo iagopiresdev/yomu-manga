@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import Banner from "../../components/Banner";
 import MyMangas from "../../components/MyMangas";
+import AiAssistant from "../../components/AiAssistant";
 
 const Profile = ({ loggedUser }: any) => {
-  const [userData, setUserData] = useState<{ id: string | number } | null>(
-    null
-  );
+  const [userData, setUserData] = useState<{ id: string | number } | null>(null);
   const [mangas, setMangas] = useState<any>([]);
+  const [mangaData, setMangaData] = useState<any>([]);
+  const [mangaTitles, setMangaTitles] = useState<any>([]);
+
   //add loading state using skeleton loader later
-  const [isLoadingMangas, setIsLoadingMangas] = useState(false);
+  //const [isLoadingMangas, setIsLoadingMangas] = useState(false);
 
   useEffect(() => {
     fetchUserData();
-  }, [loggedUser]);
+  }, []);
 
   const fetchUserData = async () => {
     const response = await fetch(
@@ -35,7 +37,7 @@ const Profile = ({ loggedUser }: any) => {
   };
 
   const getUserMangas = async (userId: string) => {
-    setIsLoadingMangas(true);
+    //setIsLoadingMangas(true);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_HOST}/userMangas/${userId}`,
@@ -47,11 +49,16 @@ const Profile = ({ loggedUser }: any) => {
         }
       );
       const data = await response.json();
+      setMangaData(data.map((item : any) => item.manga.title));
       setMangas(data);
+      setTimeout(() => {
+        getMangaListRecommendation();
+      }, 500);
+
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoadingMangas(false);
+      //setIsLoadingMangas(false);
     }
   };
 
@@ -72,9 +79,28 @@ const Profile = ({ loggedUser }: any) => {
       );
       const data = await response.json();
       setUserData(data);
-      if (data && data.id) {
-        getUserMangas(data.id);
-      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+    
+  const getMangaListRecommendation = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_HOST}/api/aiAssistant/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${loggedUser.token}`,
+          },
+          body: JSON.stringify({
+            mangas: mangaData,
+          }),
+        }
+      );
+      const data = await response.json();
+      setMangaTitles(data.choices[0].message.content);
     } catch (error) {
       console.error(error);
     }
@@ -84,8 +110,15 @@ const Profile = ({ loggedUser }: any) => {
     return <div>Loading...</div>;
   }
 
+
   return (
     <div className="flex w-full flex-col gap-5 bg-[#f6f8ff] p-6 rounded-xl">
+      {/* AI Assistant */}
+      <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12 shadow-sm shadow-[#5800FF] rounded-xl">
+        <div className="col-span-full lg:!mb-0">
+          <AiAssistant text={mangaTitles}/>
+        </div>
+      </div>
       {/* Banner */}
       <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12 shadow-sm shadow-[#5800FF] rounded-xl">
         <div className="col-span-full lg:!mb-0">
@@ -102,9 +135,6 @@ const Profile = ({ loggedUser }: any) => {
         <div className="col-span-full lg:!mb-0">
           <MyMangas mangas={mangas} />
         </div>
-      </div>
-      <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12 shadow-sm shadow-[#5800FF] rounded-xl">
-        <div className="col-span-full lg:!mb-0"></div>
       </div>
     </div>
   );

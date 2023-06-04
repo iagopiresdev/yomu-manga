@@ -20,7 +20,7 @@ import MangaDetails from "./pages/auth/MangaDetails";
 import Configurations from "./pages/profile/Dashboard";
 
 
-interface User {
+export interface User {
   token: string;
   refreshToken: {
     userId: string;

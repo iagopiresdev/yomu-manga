@@ -5,7 +5,7 @@ interface HeartButtonProps {
   setHeart: React.Dispatch<React.SetStateAction<boolean>>;
   getMangaCompleto: () => Promise<void>;
   position: number;
-  mangaCompleto: Manga | null;
+  mangaCompleto: any | null;
 }
 
 const HeartButton: React.FC<HeartButtonProps> = ({ heart, setHeart, getMangaCompleto, position, mangaCompleto }) => {
