@@ -59,7 +59,6 @@ const MangaDetails = ({ user }: any) => {
               author={mangaItem.description}
               image={mangaItem.image}
               price={mangaItem.myanimelist_id}
-              position={index}
               mangaId={mangaItem.id}
             />
             

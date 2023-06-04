@@ -12,7 +12,7 @@ function AiAssistant(props :any) {
   useEffect(() => {
     
     if (typeof fullText === "string") {
-    const matches = [...fullText.matchAll(/"(.*?)"/g)];
+    //const matches = [...fullText.matchAll(/"(.*?)"/g)];
     const regex = /"(.*?)"/g;
     const highlighted = [...fullText.matchAll(regex)].map(match => match[1]);
     const regular = fullText.replace(regex, '').trim();
