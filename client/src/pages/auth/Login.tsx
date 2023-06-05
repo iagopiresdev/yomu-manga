@@ -5,13 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import aichanpc from '../../assets/aichan.svg';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
-interface User {
-  token: string;
-  refreshToken: {
-    userId: string;
-  };
-}
+import { UserProps } from "../../types/UserProps"
+import Loader from "../../components/Loader"
 
 const createUserFormSchema = z.object({
   email: z.string().nonempty('O E-mail é obrigatório').email('O E-mail é inválido'),
@@ -23,8 +18,9 @@ const createUserFormSchema = z.object({
 
 type CreateUserFormData = z.infer<typeof createUserFormSchema>;
 
-function Login({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<User | null>> }) {
+function Login({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<UserProps | null>> }) {
   const [statusMessage, setStatusMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -36,6 +32,7 @@ function Login({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetState
   });
 
   const getUser = async (data: CreateUserFormData) => {
+    setIsLoading(true);
     const response = await fetch(`${import.meta.env.VITE_API_HOST}/login`, {
       method: 'POST',
       headers: {
@@ -43,7 +40,7 @@ function Login({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetState
       },
       body: JSON.stringify(data),
     });
-
+    setIsLoading(false);
     if (!response.ok) {
       setStatusMessage('Erro ao criar usuário');
       console.error('Failed to create get user');
@@ -88,7 +85,9 @@ function Login({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetState
             {errors.password && <span className='text-red-500 text-sm'>{errors.password.message}</span>}
           </div>
 
-          <button type="submit" className='min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 md:min-w-[500px]'>Entrar</button>
+          <button type="submit" className='min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 md:min-w-[500px]'>
+  {isLoading ? <Loader /> : 'Entrar'}
+</button>
           <Link to="/auth/sign-up" className='min-w-[340px] h-[50px] mt-[-20px] rounded-2xl font-bold text-[#5800FF] uppercase text-center py-3 md:min-w-[500px]'>Criar conta</Link>
         </form>
       </main>
