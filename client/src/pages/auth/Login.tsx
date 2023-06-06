@@ -104,7 +104,7 @@ function Login() {
         />
       </motion.div>
       <motion.main
-        className="md:min-w-[55%] md:min-h-full items-center pt-10"
+        className="md:min-w-[55%] md:min-h-full items-center p-4 md:pt-10"
         initial={{ x: "100vw" }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 50 }}
