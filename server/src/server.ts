@@ -29,7 +29,7 @@ app.use('/api/mangas', mangaApiRoutes);
 app.use('/api/aiAssistant', aiAssistantRoutes);
 app.use('/userMangas', userMangasRoutes);
 
-// handle errors with zod
+/* handle errors with zod
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
   if (err instanceof ZodError) {
     return response.status(400).json({
@@ -46,7 +46,7 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
     message: 'Internal Server Error',
   });
 });
-
+*/
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

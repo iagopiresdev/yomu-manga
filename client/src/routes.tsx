@@ -4,11 +4,10 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Import the necessary components
-import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 // Admin Imports
-
 import Profile from "./pages/profile/Profile";
 
 // Auth Imports
@@ -18,7 +17,6 @@ import SignUp from "./pages/auth/Register";
 // Authenticated User Imports
 import MangaDetails from "./pages/auth/MangaDetails";
 import Configurations from "./pages/profile/Dashboard";
-
 
 export interface User {
   token: string;
@@ -38,12 +36,13 @@ interface AdminLayoutProps {
   loggedUser: User | null;
 }
 
-const AdminLayout = ({ children, currentRoute, loggedUser }: AdminLayoutProps) => (
+const AdminLayout = ({
+  children,
+  currentRoute,
+  loggedUser,
+}: AdminLayoutProps) => (
   <>
-    <Navbar 
-      brandText={currentRoute}
-      loggedUser={loggedUser}
-    />
+    <Navbar brandText={currentRoute} loggedUser={loggedUser} />
     {children}
     <Footer />
   </>
@@ -56,7 +55,10 @@ const ConfigurationsLayout = ({ children }: { children: React.ReactNode }) => (
   </>
 );
 
-export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps) {
+export default function AppRoutes({
+  setLoggedUser,
+  loggedUser,
+}: AppRoutesProps) {
   const location = useLocation();
 
   const [currentRoute, setCurrentRoute] = useState("Main Dashboard");
@@ -74,37 +76,64 @@ export default function AppRoutes({ setLoggedUser, loggedUser }: AppRoutesProps)
   }, [location.pathname]);
 
   return (
-    <Routes>
+    <Routes key={location.key}>
       <Route path="/" element={<Navigate to="/auth/sign-in" replace />} />
-      <Route path="/auth/sign-in" element={<SignIn setLoggedUser={setLoggedUser} />} />
-      <Route path="/auth/sign-up" element={<SignUp setLoggedUser={setLoggedUser} />} />
-      <Route path="/manga-details/:mangaName" element={loggedUser ? <MangaDetails user={loggedUser} /> : <Navigate to="/auth/sign-in" replace />} />
+      <Route
+        path="/auth/sign-in"
+        element={<SignIn setLoggedUser={setLoggedUser} />}
+      />
+      <Route
+        path="/auth/sign-up"
+        element={<SignUp setLoggedUser={setLoggedUser} />}
+      />
+      <Route
+        path="/manga-details/:mangaName"
+        element={
+          loggedUser ? (
+            <MangaDetails user={loggedUser} />
+          ) : (
+            <Navigate to="/auth/sign-in" replace />
+          )
+        }
+      />
 
-      
       <Route
         path="/admin/*"
-        element={loggedUser ? 
-          <AdminLayout currentRoute={currentRoute} loggedUser={loggedUser}>
-            <Routes>
-
-              <Route path="profile" element={<Profile loggedUser={loggedUser} />} />
-
-            </Routes>
-          </AdminLayout> 
-          : 
-          <Navigate to="/auth/sign-in" replace />
+        element={
+          loggedUser ? (
+            <AdminLayout currentRoute={currentRoute} loggedUser={loggedUser}>
+              <Routes>
+                <Route
+                  path="profile"
+                  element={<Profile loggedUser={loggedUser} />}
+                />
+              </Routes>
+            </AdminLayout>
+          ) : (
+            <Navigate to="/auth/sign-in" replace />
+          )
         }
       />
       <Route
         path="/admin/config/*"
-        element={loggedUser ? 
-          <ConfigurationsLayout>
-            <Routes>
-              <Route path="" element={<Configurations loggedUser={loggedUser} setLoggedUser={setLoggedUser} />} />
-            </Routes>
-          </ConfigurationsLayout> 
-          : 
-          <Navigate to="/auth/sign-in" replace />
+        element={
+          loggedUser ? (
+            <ConfigurationsLayout>
+              <Routes>
+                <Route
+                  path=""
+                  element={
+                    <Configurations
+                      loggedUser={loggedUser}
+                      setLoggedUser={setLoggedUser}
+                    />
+                  }
+                />
+              </Routes>
+            </ConfigurationsLayout>
+          ) : (
+            <Navigate to="/auth/sign-in" replace />
+          )
         }
       />
       <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />

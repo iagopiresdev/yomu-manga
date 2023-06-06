@@ -4,8 +4,8 @@ import { z } from 'zod'; // import zod
 
 // define the schema for the request data
 const IUserRequestSchema = z.object({
-    name: z.string(),
-    username: z.string(),
+    name: z.string().optional(),
+    username: z.string().optional(),
     email: z.string().email(),
     password: z.string().nonempty('Password is undefined or empty'),
 });
@@ -17,10 +17,7 @@ class CreateUser {
 
         const userAlreadyExists = await client.user.findFirst({
             where: {
-                OR: [
-                    { email },
-                    { username }
-                ]
+                email 
             }
         });
 
