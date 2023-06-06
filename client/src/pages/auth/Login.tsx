@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { UserProps } from "../../types/UserProps";
 import Loader from "../../components/Loader";
-import MessageCard from "../../components/card/MessageCardLogin";
+import MessageCard from "../../components/card/MessageCard";
 import { motion } from "framer-motion";
 
 const createUserFormSchema = z.object({

@@ -1,8 +1,8 @@
 import React from "react";
-import Dropdown from "./dropdown";
+import Dropdown from "./Dropdown";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { z } from 'zod';
+import { z } from "zod";
 import { Link } from "react-router-dom";
 import aichan from "../assets/aichan.svg";
 import jinwoo from "../assets/jinwoo.svg";
@@ -14,15 +14,14 @@ import {
   IoMdInformationCircleOutline,
 } from "react-icons/io";
 
-
 const Navbar = ({ brandText }: any) => {
   const [darkmode, setDarkmode] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
-  const searchSchema = z.string().min(1, 'Please enter at least 1 character');
-  
+  const searchSchema = z.string().min(1, "Please enter at least 1 character");
+
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       const result = searchSchema.safeParse(searchValue);
 
       if (!result.success) {
@@ -31,7 +30,7 @@ const Navbar = ({ brandText }: any) => {
         navigate(`/manga-details/${searchValue}`);
       }
     }
-  }
+  };
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-light-primary dark:bg-dark-primary px-6 backdrop-blur-xl">
@@ -67,71 +66,72 @@ const Navbar = ({ brandText }: any) => {
       {/* Search */}
       <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-light-secondary px-2 py-2 shadow-sm shadow-shadow-500 dark:bg-dark-primary md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[365px] xl:gap-2 shadow-[#5800FF]">
         <div className="flex h-full items-center rounded-full bg-light-primary text-light-text dark:bg-dark-primary dark:text-dark-text xl:w-[225px]">
-      <p className="pl-3 pr-2 text-xl">
-        <FiSearch className="h-4 w-4 text-light-text-accent dark:text-dark-text" />
-      </p>
-      <input
-        type="text"
-        placeholder="Acervo..."
-        className="block h-full w-full rounded-full bg-light-primary text-sm font-medium text-light-text-accent outline-none placeholder:!text-light-text-accent dark:bg-dark-primary dark:text-dark-text dark:placeholder:!text-dark-text sm:w-fit"
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
-        onKeyPress={handleSearch}
-      />
-    </div>
+          <p className="pl-3 pr-2 text-xl">
+            <FiSearch className="h-4 w-4 text-light-text-accent dark:text-dark-text" />
+          </p>
+          <input
+            type="text"
+            placeholder="Acervo..."
+            className="block h-full w-full rounded-full bg-light-primary text-sm font-medium text-light-text-accent outline-none placeholder:!text-light-text-accent dark:bg-dark-primary dark:text-dark-text dark:placeholder:!text-dark-text sm:w-fit"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyPress={handleSearch}
+          />
+        </div>
 
         {/* start Notification */}
-<Dropdown
-  button={
-    <p className="cursor-pointer">
-      <IoMdNotificationsOutline className="h-4 w-4 text-dark-text-accent dark:text-dark-text" />
-    </p>
-  }
-  animation="origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out"
-  children={
-    <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-light-primary p-4 shadow-xl shadow-shadow-500 dark:bg-dark-primary dark:text-dark-text sm:w-[460px]">
-      <div className="flex items-center justify-between">
-        <p className="text-base font-bold text-light-text dark:text-dark-text-accent">
-          Notificações
-        </p>
-        <p className="text-sm font-bold text-light-text dark:text-dark-text-accent">
-          Marcar como Lido
-        </p>
-      </div>
+        <Dropdown
+          button={
+            <p className="cursor-pointer">
+              <IoMdNotificationsOutline className="h-4 w-4 text-dark-text-accent dark:text-dark-text" />
+            </p>
+          }
+          animation="origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out"
+          children={
+            <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-light-primary p-4 shadow-xl shadow-shadow-500 dark:bg-dark-primary dark:text-dark-text sm:w-[460px]">
+              <div className="flex items-center justify-between">
+                <p className="text-base font-bold text-light-text dark:text-dark-text-accent">
+                  Notificações
+                </p>
+                <p className="text-sm font-bold text-light-text dark:text-dark-text-accent">
+                  Marcar como Lido
+                </p>
+              </div>
 
+              {/* Notifications */}
+              <button className="flex w-full items-center ">
+                <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-dark-text-accent ">
+                  <SiMyanimelist />
+                </div>
+                <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                  <p className="mb-1 text-left text-base font-bold text-dark-text-accent dark:text-dark-text">
+                    Novo manga disponível!
+                  </p>
+                  <p className="font-base text-left text-xs text-light-text dark:text-dark-text">
+                    Um protagonista morreu e reencarnou com super poderes, que
+                    original!
+                  </p>
+                </div>
+              </button>
 
-      {/* Notifications */}
-      <button className="flex w-full items-center ">
-        <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-dark-text-accent ">
-          <SiMyanimelist />
-        </div>
-        <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-          <p className="mb-1 text-left text-base font-bold text-dark-text-accent dark:text-dark-text">
-            Novo manga disponível!
-          </p>
-          <p className="font-base text-left text-xs text-light-text dark:text-dark-text">
-            Um protagonista morreu e reencarnou com super poderes, que original!
-          </p>
-        </div>
-      </button>
-
-      <button className="flex w-full items-center">
-        <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-dark-text-accent">
-          <SiMyanimelist />
-        </div>
-        <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-          <p className="mb-1 text-left text-base font-bold text-dark-text-accent dark:text-dark-text">
-            Novo resumo semanal
-          </p>
-          <p className="font-base text-left text-xs text-light-text dark:text-dark-text">
-            Mais um capítulo de One Piece, e o Luffy ainda não é o Rei dos Piratas
-          </p>
-        </div>
-      </button>
-    </div>
-  }
-  classNames={"py-2 top-4 -left-[230px] md:-left-[440px] w-max"}
-/>
+              <button className="flex w-full items-center">
+                <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-dark-text-accent">
+                  <SiMyanimelist />
+                </div>
+                <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                  <p className="mb-1 text-left text-base font-bold text-dark-text-accent dark:text-dark-text">
+                    Novo resumo semanal
+                  </p>
+                  <p className="font-base text-left text-xs text-light-text dark:text-dark-text">
+                    Mais um capítulo de One Piece, e o Luffy ainda não é o Rei
+                    dos Piratas
+                  </p>
+                </div>
+              </button>
+            </div>
+          }
+          classNames={"py-2 top-4 -left-[230px] md:-left-[440px] w-max"}
+        />
 
         {/* Info */}
         <Dropdown
@@ -197,46 +197,45 @@ const Navbar = ({ brandText }: any) => {
           )}
         </div>
 
-{/* Profile & Dropdown */}
-<Dropdown
-  button={
-    <img
-      className="h-10 w-10 rounded-full cursor-pointer"
-      src={jinwoo}
-      alt="Jin woo from Solo Leveling and the best character ever"
-    />
-  }
-  children={
-    <div className="flex h-32 w-56 flex-col justify-start rounded-[20px] bg-light-primary bg-cover bg-no-repeat shadow-xl shadow-shadow-500 dark:bg-dark-primary">
-      <div className="mt-3 ml-4">
-        <div className="flex items-center gap-2">
-          <p className="text-sm font-bold text-light-text dark:text-dark-text">
-            👋 Opa Opa!
-          </p>{" "}
-        </div>
-      </div>
-      <div className="mt-3 h-px w-full bg-light-secondary dark:bg-dark-secondary " />
+        {/* Profile & Dropdown */}
+        <Dropdown
+          button={
+            <img
+              className="h-10 w-10 rounded-full cursor-pointer"
+              src={jinwoo}
+              alt="Jin woo from Solo Leveling and the best character ever"
+            />
+          }
+          children={
+            <div className="flex h-32 w-56 flex-col justify-start rounded-[20px] bg-light-primary bg-cover bg-no-repeat shadow-xl shadow-shadow-500 dark:bg-dark-primary">
+              <div className="mt-3 ml-4">
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-bold text-light-text dark:text-dark-text">
+                    👋 Opa Opa!
+                  </p>{" "}
+                </div>
+              </div>
+              <div className="mt-3 h-px w-full bg-light-secondary dark:bg-dark-secondary " />
 
-      <div className="mt-3 ml-4 flex flex-col">
-        <Link
-          to="/admin/config"
-          className="text-sm text-light-text dark:text-dark-text hover:text-light-text-accent dark:hover:text-dark-text-accent"
-        >
-          Configurações
-        </Link>
+              <div className="mt-3 ml-4 flex flex-col">
+                <Link
+                  to="/admin/config"
+                  className="text-sm text-light-text dark:text-dark-text hover:text-light-text-accent dark:hover:text-dark-text-accent"
+                >
+                  Configurações
+                </Link>
 
-        <a
-          href=" "
-          className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
-        >
-          Sair
-        </a>
-      </div>
-    </div>
-  }
-  classNames={"py-2 top-8 -left-[180px] w-max"}
-/>
-
+                <a
+                  href=" "
+                  className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
+                >
+                  Sair
+                </a>
+              </div>
+            </div>
+          }
+          classNames={"py-2 top-8 -left-[180px] w-max"}
+        />
       </div>
     </nav>
   );

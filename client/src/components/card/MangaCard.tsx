@@ -126,7 +126,6 @@ const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId, title, author, p
               Ranking: {price}
             </p>
           </div>
-          <Card></Card>
         </div>
       </div>
     </Card>

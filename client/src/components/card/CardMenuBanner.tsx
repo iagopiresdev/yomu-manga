@@ -1,5 +1,5 @@
 import React from "react";
-import Dropdown from "../dropdown";
+import Dropdown from "../Dropdown";
 import { FaUserEdit } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
