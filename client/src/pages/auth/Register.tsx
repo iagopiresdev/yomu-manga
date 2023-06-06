@@ -198,7 +198,7 @@ function Register() {
 
           <button
             type="submit"
-            className="relative min-w-[340px] h-[50px] mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 flex items-center justify-center md:min-w-[500px]"
+            className="relative min-w-[340px] h-[50px] mt-4 md:mt-[55px] bg-[#5800FF] rounded-2xl font-bold text-white uppercase text-center py-3 flex items-center justify-center md:min-w-[500px]"
           >
             {isLoading ? <Loader /> : "Register"}
           </button>
