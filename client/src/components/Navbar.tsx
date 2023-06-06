@@ -38,7 +38,7 @@ const Navbar = ({ brandText }: any) => {
         <div className="h-6 w-[224px] pt-1">
           <a
             className="text-sm font-normal text-light-text-accent hover:underline dark:text-dark-text"
-            href=" "
+            href="/"
           >
             Login
             <span className="mx-1 text-sm text-light-text-accent hover:text-light-text dark:text-dark-text">
@@ -224,7 +224,7 @@ const Navbar = ({ brandText }: any) => {
                 </Link>
 
                 <a
-                  href=" "
+                  href="/"
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >
                   Logout

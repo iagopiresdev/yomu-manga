@@ -117,7 +117,7 @@ function Login() {
         </div>
         {statusMessage && <MessageCard message={statusMessage} />}
         <form
-          className="w-full max-w-md mt-6 md:mt-[80px] mx-auto flex flex-col gap-7 items-center justify-center md:max-w-xl"
+          className="w-full max-w-md mt-4 md:mt-[80px] mx-auto flex flex-col gap-7 items-center justify-center md:max-w-xl"
           onSubmit={handleSubmit(getUser)}
         >
           <div className="flex flex-col gap-1">
