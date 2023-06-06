@@ -58,7 +58,7 @@ const Navbar = ({ brandText }: any) => {
             to="/admin/profile"
             className="font-bold capitalize hover:underline"
           >
-            Meu Perfil
+            My Profile
           </Link>
         </p>
       </div>
@@ -71,7 +71,7 @@ const Navbar = ({ brandText }: any) => {
           </p>
           <input
             type="text"
-            placeholder="Acervo..."
+            placeholder="Library..."
             className="block h-full w-full rounded-full bg-light-primary text-sm font-medium text-light-text-accent outline-none placeholder:!text-light-text-accent dark:bg-dark-primary dark:text-dark-text dark:placeholder:!text-dark-text sm:w-fit"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
@@ -91,10 +91,10 @@ const Navbar = ({ brandText }: any) => {
             <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-light-primary p-4 shadow-xl shadow-shadow-500 dark:bg-dark-primary dark:text-dark-text sm:w-[460px]">
               <div className="flex items-center justify-between">
                 <p className="text-base font-bold text-light-text dark:text-dark-text-accent">
-                  Notificações
+                  Notifications
                 </p>
                 <p className="text-sm font-bold text-light-text dark:text-dark-text-accent">
-                  Marcar como Lido
+                  Mark as Read
                 </p>
               </div>
 
@@ -105,11 +105,10 @@ const Navbar = ({ brandText }: any) => {
                 </div>
                 <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
                   <p className="mb-1 text-left text-base font-bold text-dark-text-accent dark:text-dark-text">
-                    Novo manga disponível!
+                    New manga available!
                   </p>
                   <p className="font-base text-left text-xs text-light-text dark:text-dark-text">
-                    Um protagonista morreu e reencarnou com super poderes, que
-                    original!
+                    A protagonist died and reincarnated with superpowers, how original!
                   </p>
                 </div>
               </button>
@@ -120,11 +119,10 @@ const Navbar = ({ brandText }: any) => {
                 </div>
                 <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
                   <p className="mb-1 text-left text-base font-bold text-dark-text-accent dark:text-dark-text">
-                    Novo resumo semanal
+                    New weekly summary
                   </p>
                   <p className="font-base text-left text-xs text-light-text dark:text-dark-text">
-                    Mais um capítulo de One Piece, e o Luffy ainda não é o Rei
-                    dos Piratas
+                    Another chapter of One Piece, and Luffy is still not the Pirate King
                   </p>
                 </div>
               </button>
@@ -155,7 +153,7 @@ const Navbar = ({ brandText }: any) => {
                 href="#"
                 className="px-full linear flex cursor-pointer items-center justify-center rounded-xl bg-brand-500 py-[11px] font-bold text-dark-text-accent transition duration-200 hover:bg-brand-600 hover:underline active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               >
-                Créditos
+                Credits
               </a>
               <a
                 target="blank"
@@ -211,7 +209,7 @@ const Navbar = ({ brandText }: any) => {
               <div className="mt-3 ml-4">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-light-text dark:text-dark-text">
-                    👋 Opa Opa!
+                    👋 Hello there!
                   </p>{" "}
                 </div>
               </div>
@@ -222,14 +220,14 @@ const Navbar = ({ brandText }: any) => {
                   to="/admin/config"
                   className="text-sm text-light-text dark:text-dark-text hover:text-light-text-accent dark:hover:text-dark-text-accent"
                 >
-                  Configurações
+                  Settings
                 </Link>
 
                 <a
                   href=" "
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >
-                  Sair
+                  Logout
                 </a>
               </div>
             </div>

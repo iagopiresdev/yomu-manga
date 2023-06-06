@@ -87,7 +87,7 @@ function Dashboard() {
         }, 3000);
       }
     }
-    onOpen(); // Open the modal
+    onOpen(); 
   };
   
 

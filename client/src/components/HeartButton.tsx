@@ -1,17 +1,11 @@
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import HeartButtonProps from "../types/HeartButtonProps";
 
-interface HeartButtonProps {
-  heart: boolean;
-  setHeart: React.Dispatch<React.SetStateAction<boolean>>;
-  getMangaCompleto: () => Promise<void>;
-  position: number;
-  mangaCompleto: any | null;
-}
 
-const HeartButton: React.FC<HeartButtonProps> = ({ heart, setHeart, getMangaCompleto, position, mangaCompleto }) => {
+const HeartButton: React.FC<HeartButtonProps> = ({ heart, setHeart, getFullManga, position, mangaCompleto }) => {
   const handleHeartClick = async () => {
     if(!mangaCompleto || mangaCompleto.myanimelist_id !== position){
-      await getMangaCompleto();
+      await getFullManga();
     }
     setHeart(!heart);
   };

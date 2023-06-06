@@ -1,15 +1,7 @@
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useState } from "react";
 import Card from ".";
-
-interface MangaCardProps {
-  image: string;
-  title: string;
-  author: string;
-  price: string | number;
-  userId: string;
-  mangaId: number;
-}
+import MangaCardProps from "../../types/MangaCardProps";
 
 const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId, title, author, price, image }) => {
   const [heart, setHeart] = useState(true);
@@ -37,11 +29,11 @@ const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId, title, author, p
         })
       });
       if (response.ok) {
-        setAlert('Manga adicionado com sucesso!');
-        console.log('Manga adicionado com sucesso!');
+        setAlert('Manga added successfully!');
+        console.log('Manga added successfully!');
       }
     } catch (error) {
-      setAlert('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
+      setAlert('Failed to create or delete the manga. Please try again later.');
       console.error(error);
     }
   };
@@ -58,11 +50,11 @@ const MangaCard: React.FC<MangaCardProps> = ({ userId, mangaId, title, author, p
         })
       });
       if (response.ok) {
-        setAlert('Manga removido com sucesso!');
-        console.log('Manga removido com sucesso!');
+        setAlert('Manga removed successfully!');
+        console.log('Manga removed successfully!');
       }
     } catch (error) {
-      setAlert('Falha ao criar ou deletar o manga. Por favor, tente novamente mais tarde.');
+      setAlert('Failed to create or delete the manga. Please try again later.');
       console.error(error);
     }
   };

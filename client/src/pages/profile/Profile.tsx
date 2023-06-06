@@ -6,7 +6,6 @@ import { useUser } from '../../components/UserContext';
 
 const Profile = () => {
   const { user } = useUser();
-  
   const [userData, setUserData] = useState<{ id: string | number } | null>(null);
   const [mangas, setMangas] = useState<any>([]);
   const [mangaData, setMangaData] = useState<any>([]);

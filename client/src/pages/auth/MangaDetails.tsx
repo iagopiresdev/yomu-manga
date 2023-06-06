@@ -3,15 +3,7 @@ import { useParams } from "react-router-dom";
 import MangaCard from "../../components/card/MangaCard";
 import Navbar from "../../components/Navbar";
 import { useUser } from '../../components/UserContext';
-
-interface Manga {
-  title: string;
-  image: string;
-  description: string;
-  myanimelist_url: string;
-  myanimelist_id: number;
-  id: number;
-}
+import Manga from "../../types/MangaProps";
 
 const MangaDetails = () => {
   const { user } = useUser();
@@ -43,7 +35,7 @@ const MangaDetails = () => {
     fetchManga();
   }, [mangaName]);
 
-  if (!manga) return <div>Carregando...</div>;
+  if (!manga) return <div>LOADING...</div>;
 
   return (
     <>
@@ -54,7 +46,6 @@ const MangaDetails = () => {
             key={index}
             className="!z-5 relative rounded-[20px] bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:shadow-none flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white undefined"
           >
-            
             <MangaCard
               userId={userId}
               title={mangaItem.title}
