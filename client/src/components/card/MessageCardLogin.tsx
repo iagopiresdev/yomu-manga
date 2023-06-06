@@ -3,7 +3,6 @@ import Card from './';
 
 interface MessageCardProps {
   message: string;
-  type: 'error' | 'success';
 }
 
 function MessageCard({ message }: MessageCardProps) {
