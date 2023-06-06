@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import aichanpc from "../../assets/aichan.svg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { UserProps } from "../../types/UserProps";
 import Loader from "../../components/Loader";
 import MessageCard from "../../components/card/MessageCard";
 import { motion } from "framer-motion";
+import { useUser } from '../../components/UserContext';
 
 const createUserFormSchema = z.object({
   email: z
@@ -23,11 +23,8 @@ const createUserFormSchema = z.object({
 
 type CreateUserFormData = z.infer<typeof createUserFormSchema>;
 
-function Login({
-  setLoggedUser,
-}: {
-  setLoggedUser: React.Dispatch<React.SetStateAction<UserProps | null>>;
-}) {
+function Login() {
+  const { setUser } = useUser();
   const [statusMessage, setStatusMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -80,7 +77,7 @@ function Login({
         console.error("Failed to create get user");
       } else {
         const responseData = await response.json();
-        setLoggedUser(responseData);
+        setUser(responseData);
         navigate("/admin/profile");
       }
     } catch (error) {

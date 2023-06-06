@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import MessageCard from "../../components/card/MessageCard";
 import { motion } from "framer-motion";
+import { useUser } from '../../components/UserContext';
 
 const signUpFormSchema = z.object({
   email: z.string().nonempty("O E-mail é obrigatório").email("O E-mail é inválido"),
@@ -24,14 +25,9 @@ const signUpFormSchema = z.object({
 
 type CreateUserFormData = z.infer<typeof signUpFormSchema>;
 
-interface User {
-  token: string;
-  refreshToken: {
-    userId: string;
-  };
-}
 
-function Register({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetStateAction<User | null>> }) {
+function Register() {
+  const { setUser } = useUser();
   const [statusMessage, setStatusMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -84,7 +80,7 @@ function Register({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetSt
         console.error("Failed to register user");
       } else {
         const responseData = await response.json();
-        setLoggedUser(responseData);
+        setUser(responseData);
         navigate("/login");
       }
     } catch (error) {
@@ -94,7 +90,6 @@ function Register({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetSt
     }
   };
   
-
   return (
     <motion.section
       className="h-screen min-w-full flex flex-col bg-[#f6f8ff] md:flex-row flex-wrap md:max-w-2xl max-w-md md:min-w-full md:min-h-full overflow-hidden"

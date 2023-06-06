@@ -6,6 +6,7 @@ import aichanpc from '../../assets/aichan.svg';
 import { useNavigate } from 'react-router-dom';
 import { Modal, ModalOverlay, ModalContent, ModalBody } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
+import { useUser } from '../../components/UserContext';
 
 const updateUserFormSchema = z.object({
   name: z.string()
@@ -22,14 +23,10 @@ const updateUserFormSchema = z.object({
 
 type UpdateUserFormData = z.infer<typeof updateUserFormSchema>;
 
-interface User {
-  token: string;
-  refreshToken: {
-    userId: string;
-  };
-}
 
-function Dashboard({ loggedUser, setLoggedUser }: { loggedUser: User, setLoggedUser: React.Dispatch<React.SetStateAction<User | null>> }) {
+
+function Dashboard() {
+  const { user: loggedUser, setUser } = useUser();
   const navigate = useNavigate();
   const [statusMessage, setStatusMessage] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,6 +40,7 @@ function Dashboard({ loggedUser, setLoggedUser }: { loggedUser: User, setLoggedU
   });
 
   const onSubmit = async (data: UpdateUserFormData) => {
+    if (!loggedUser) return;
     const response = await fetch(`${import.meta.env.VITE_API_HOST}/users/${loggedUser.refreshToken.userId}`, {
       method: 'PUT',
       headers: {
@@ -57,7 +55,7 @@ function Dashboard({ loggedUser, setLoggedUser }: { loggedUser: User, setLoggedU
       setStatusMessage('Failed to update user');
     } else {
       const updatedUser = await response.json();
-      setLoggedUser(updatedUser);
+      setUser(updatedUser);
       setStatusMessage('User updated successfully');
       setTimeout(() => {
         setStatusMessage('');
@@ -68,6 +66,7 @@ function Dashboard({ loggedUser, setLoggedUser }: { loggedUser: User, setLoggedU
   };
 
   const deleteUser = async () => {
+    if (!loggedUser) return;
     if (window.confirm('Are you sure you want to delete your account?')) {
       const response = await fetch(`${import.meta.env.VITE_API_HOST}/users/${loggedUser.refreshToken.userId}`, {
         method: 'DELETE',
@@ -81,7 +80,7 @@ function Dashboard({ loggedUser, setLoggedUser }: { loggedUser: User, setLoggedU
         setStatusMessage('Failed to delete user');
       } else {
         setStatusMessage('User deleted successfully');
-        setLoggedUser(null);
+        setUser(null);
         setTimeout(() => {
           setStatusMessage('');
           navigate('/auth/sign-in');

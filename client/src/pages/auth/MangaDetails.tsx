@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MangaCard from "../../components/card/MangaCard";
 import Navbar from "../../components/Navbar";
+import { useUser } from '../../components/UserContext';
 
 interface Manga {
   title: string;
@@ -12,10 +13,11 @@ interface Manga {
   id: number;
 }
 
-const MangaDetails = ({ user }: any) => {
+const MangaDetails = () => {
+  const { user } = useUser();
   const [manga, setManga] = useState<Manga[] | null>(null);
   const { mangaName } = useParams<{ mangaName: string }>();
-  const userId = user.refreshToken.userId;
+  const userId = user?.refreshToken.userId || '';
 
   console.log(user);
 

@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import Routes, { User } from './routes';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes';
+import { Providers } from './components/Providers';
 
 export default function App() {
-  const [loggedUser, setLoggedUser] = useState<User | null>(null);
-
-
   return (
-      <BrowserRouter>
+    <BrowserRouter>
+      <Providers>
         <main className="w-screen bg-[#f6f8ff]">
-          <Routes setLoggedUser={setLoggedUser} loggedUser={loggedUser} />
+          <Routes />
         </main>
-      </BrowserRouter>
-  )
+      </Providers>
+    </BrowserRouter>
+  );
 }
-
-

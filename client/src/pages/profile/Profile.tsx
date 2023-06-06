@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import Banner from "../../components/Banner";
 import MyMangas from "../../components/MyMangas";
 import AiAssistant from "../../components/AiAssistant";
+import { useUser } from '../../components/UserContext';
 
-const Profile = ({ loggedUser }: any) => {
+const Profile = () => {
+  const { user } = useUser();
+  
   const [userData, setUserData] = useState<{ id: string | number } | null>(null);
   const [mangas, setMangas] = useState<any>([]);
   const [mangaData, setMangaData] = useState<any>([]);
@@ -17,13 +20,14 @@ const Profile = ({ loggedUser }: any) => {
   }, []);
 
   const fetchUserData = async () => {
+    if(!user) return;
     const response = await fetch(
       `${import.meta.env.VITE_API_HOST}/users/${
-        loggedUser.refreshToken.userId
+        user.refreshToken.userId
       }`,
       {
         headers: {
-          Authorization: `Bearer ${loggedUser.token}`,
+          Authorization: `Bearer ${user.token}`,
           Accept: "application/json",
         },
       }
@@ -63,6 +67,7 @@ const Profile = ({ loggedUser }: any) => {
   };
 
   const updateUser = async (newValue: string, field: string) => {
+    if(!user) return;
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_HOST}/users/${userData?.id}`,
@@ -70,7 +75,7 @@ const Profile = ({ loggedUser }: any) => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${loggedUser.token}`,
+            Authorization: `Bearer ${user.token}`,
           },
           body: JSON.stringify({
             [field]: newValue,
@@ -85,6 +90,7 @@ const Profile = ({ loggedUser }: any) => {
   };
     
   const getMangaListRecommendation = async () => {
+    if(!user) return;
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_HOST}/api/aiAssistant/`,
@@ -92,7 +98,7 @@ const Profile = ({ loggedUser }: any) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${loggedUser.token}`,
+            Authorization: `Bearer ${user.token}`,
           },
           body: JSON.stringify({
             mangas: mangaData,
@@ -110,7 +116,6 @@ const Profile = ({ loggedUser }: any) => {
     return <div>Loading...</div>;
   }
 
-
   return (
     <div className="flex w-full flex-col gap-5 bg-[#f6f8ff] p-6 rounded-xl">
       {/* AI Assistant */}
@@ -124,7 +129,7 @@ const Profile = ({ loggedUser }: any) => {
         <div className="col-span-full lg:!mb-0">
           <Banner
             userData={userData}
-            loggedUser={loggedUser.token}
+            loggedUser={user && user.token}
             updateUser={updateUser}
             mangas={mangas}
           />
