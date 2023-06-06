@@ -3,10 +3,9 @@ import Card from './';
 
 interface MessageCardProps {
   message: string;
-  type: 'error' | 'success';
 }
 
-function MessageCard({ message, type }: MessageCardProps) {
+function MessageCard({ message }: MessageCardProps) {
   const baseStyle = 'absolute bottom-0 left-0 m-4 p-4 text-white text-sm';
   const typeStyle = 'bg-red-400';
 

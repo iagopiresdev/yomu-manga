@@ -127,7 +127,7 @@ function Register({ setLoggedUser }: { setLoggedUser: React.Dispatch<React.SetSt
           </motion.h1>
         </div>
         {statusMessage && (
-          <MessageCard type="error" message={statusMessage} />
+          <MessageCard message={statusMessage} />
         )}
         <form
           className="w-full max-w-md mt-6 md:mt-[80px] mx-auto flex flex-col gap-7 items-center justify-center md:max-w-xl"
